@@ -19,7 +19,7 @@ def dem(dem_path: Path) -> viewshed.ProjectedSquareCellRaster:
 
 
 @pytest.fixture
-def viewpoint(dem) -> viewshed.Point:
+def viewpoint(dem: viewshed.ProjectedSquareCellRaster) -> viewshed.Point:
     vp = viewshed.Point(-336428.767, -1189102.785, dem, 1.6)
     assert vp.isValid()
     return vp
