@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 import viewshed
 
 
@@ -22,6 +24,16 @@ def test_aglorithms() -> None:
 
     algs = viewshed.VisibilityAlgorithms(False)
     assert algs.size() == 17
+
+
+def test_raster_paths_init() -> None:
+    with pytest.raises(RuntimeError) as e:
+        a = viewshed.ProjectedSquareCellRaster(123)
+    assert "must be PurePath" in str(e)
+
+    a = viewshed.ProjectedSquareCellRaster(Path("a.tif"))
+    assert isinstance(a, viewshed.ProjectedSquareCellRaster)
+    assert a.error() == "a.tif: No such file or directory"
 
 
 def test_raster_not_init() -> None:
@@ -52,6 +64,7 @@ def test_viewshed(
     assert isinstance(v, viewshed.Viewshed)
     v.calculate()
     v.saveResults(work_folder.as_posix())
+    v.saveResults(work_folder)
 
 
 def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRaster) -> None:
@@ -61,3 +74,4 @@ def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRa
     assert isinstance(v, viewshed.InverseViewshed)
     v.calculate()
     v.saveResults(work_folder.as_posix())
+    v.saveResults(work_folder)
