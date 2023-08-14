@@ -1,0 +1,45 @@
+name: Test package
+
+on:
+  push:
+    paths:
+      - src/**
+      - tests/**
+      - .github/workflows/test_package.yaml
+
+jobs:
+
+  test:
+
+    strategy:
+      matrix:
+        python-version: ["3.8"] #  "3.9", "3.10", "3.11" 
+
+    name: "Test package in Python ${{ matrix.python-version }}"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Install requirments
+        run: |
+          sudo add-apt-repository ppa:jancaha/gis-tools
+          sudo apt-get update
+          sudo apt-get install viewshed-bin
+
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "${{ matrix.python-version }}"
+          architecture: 'x64'
+
+      - name: Install package
+        run: |
+          python3 setup.py bdist_wheel
+          pip install dist/viewshed-*.whl --force-reinstall
+
+      - name: Run tests
+        run: pytest -vv -s
