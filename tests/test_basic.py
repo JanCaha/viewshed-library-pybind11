@@ -16,7 +16,7 @@ def print_val1(s: str, v: float) -> None:
 
 def test_library():
     assert isinstance(viewshed.version, str)
-    assert viewshed.version == "2.6.4"
+    assert viewshed.version == "2.6.5"
 
 
 def test_aglorithms():
