@@ -26,6 +26,7 @@ PYBIND11_MODULE( viewshed, m )
     // visibility algorithms
     py::class_<VisibilityAlgs, std::shared_ptr<VisibilityAlgs>>( m, "VisibilityAlgorithms" )
         .def( py::init( []() { return std::make_shared<VisibilityAlgs>( false ); } ) )
+        .def( py::init( []( const double &noData ) { return std::make_shared<VisibilityAlgs>( false, noData ); } ) )
         .def( py::init( []( const bool &single ) { return std::make_shared<VisibilityAlgs>( single ); } ) )
         .def( py::init( []( const bool &single, const double &noData )
                         { return std::make_shared<VisibilityAlgs>( single, noData ); } ) )
