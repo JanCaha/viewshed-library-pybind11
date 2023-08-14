@@ -1,7 +1,5 @@
 #include <cmath>
 #include <limits>
-#include <memory>
-#include <string>
 
 #include <visibility_algorithms.h>
 
