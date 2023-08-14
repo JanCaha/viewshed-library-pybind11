@@ -21,6 +21,8 @@ set(SOURCES
     src/python_module.cpp
     src/visibility_algorithms.h
     src/visibility_algorithms.cpp
+    src/python_objects_utils.h
+    src/python_objects_utils.cpp
 )
 
 add_subdirectory(pybind11)
