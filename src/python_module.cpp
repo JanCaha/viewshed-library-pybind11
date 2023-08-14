@@ -10,6 +10,7 @@ namespace py = pybind11;
 
 #include "simplerasters.h"
 
+#include "python_objects_utils.h"
 #include "visibility_algorithms.h"
 
 using viewshed::AbstractViewshedAlgorithm;
@@ -39,6 +40,9 @@ PYBIND11_MODULE( viewshed, m )
             { return std::make_shared<ProjectedSquareCellRaster>( path, GDALDataType::GDT_Unknown, band ); } ) )
         .def(
             py::init( []( const std::string &path ) { return std::make_shared<ProjectedSquareCellRaster>( path ); } ) )
+        .def( py::init(
+            []( const py::object obj )
+            { return std::make_shared<ProjectedSquareCellRaster>( get_absolute_path( obj, "filename" ) ); } ) )
         .def( "error", &ProjectedSquareCellRaster::error )
         .def( "noData", &ProjectedSquareCellRaster::noData );
 
@@ -59,6 +63,8 @@ PYBIND11_MODULE( viewshed, m )
         .def( "calculate", &Viewshed::calculate )
         .def( "saveResults",
               []( const std::shared_ptr<Viewshed> v, const std::string path ) { v->saveResults( path ); } )
+        .def( "saveResults", []( const std::shared_ptr<Viewshed> v, const py::object path )
+              { v->saveResults( get_absolute_path( path, "path" ) ); } )
         .def( "setMaxThreads", &Viewshed::setMaxThreads );
 
     // inverseviewshed
@@ -72,5 +78,7 @@ PYBIND11_MODULE( viewshed, m )
         .def( "calculate", &InverseViewshed::calculate )
         .def( "saveResults",
               []( const std::shared_ptr<InverseViewshed> v, const std::string path ) { v->saveResults( path ); } )
+        .def( "saveResults", []( const std::shared_ptr<InverseViewshed> v, const py::object path )
+              { v->saveResults( get_absolute_path( path, "path" ) ); } )
         .def( "setMaxThreads", &InverseViewshed::setMaxThreads );
 }
