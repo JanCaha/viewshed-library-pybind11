@@ -60,8 +60,10 @@ def test_viewshed(
     viewpoint: viewshed.Point,
 ) -> None:
     algs = viewshed.VisibilityAlgorithms(False)
+
     v = viewshed.Viewshed(viewpoint, dem, algs)
     assert isinstance(v, viewshed.Viewshed)
+
     v.calculate()
 
     # alternative call with callback functions that print output
@@ -72,10 +74,13 @@ def test_viewshed(
 
 
 def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRaster) -> None:
-    tp = viewshed.Point(-336428.767, -1189102.785, dem, 0)
     algs = viewshed.VisibilityAlgorithms(False)
+
+    tp = viewshed.Point(-336428.767, -1189102.785, dem, 0)
+
     iv = viewshed.InverseViewshed(tp, 1.6, dem, algs)
     assert isinstance(iv, viewshed.InverseViewshed)
+
     iv.calculate()
 
     # alternative call with callback functions that print output
