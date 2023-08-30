@@ -5,11 +5,11 @@ import pytest
 import viewshed
 
 
-def print_val(i: int, j: int) -> None:
+def print_percent_done(i: int, j: int) -> None:
     print(f"{i}/{j}")
 
 
-def print_val1(s: str, v: float) -> None:
+def print_timing_messages(s: str, v: float) -> None:
     print(f"{s}: {v}")
 
 
@@ -63,15 +63,23 @@ def test_viewshed(
     v = viewshed.Viewshed(viewpoint, dem, algs)
     assert isinstance(v, viewshed.Viewshed)
     v.calculate()
+
+    # alternative call with callback functions that print output
+    v.calculate(print_timing_messages, print_percent_done)
+
     v.saveResults(work_folder.as_posix())
     v.saveResults(work_folder)
 
 
 def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRaster) -> None:
-    vp = viewshed.Point(-336428.767, -1189102.785, dem, 0)
+    tp = viewshed.Point(-336428.767, -1189102.785, dem, 0)
     algs = viewshed.VisibilityAlgorithms(False)
-    v = viewshed.InverseViewshed(vp, 1.6, dem, algs)
-    assert isinstance(v, viewshed.InverseViewshed)
-    v.calculate()
-    v.saveResults(work_folder.as_posix())
-    v.saveResults(work_folder)
+    iv = viewshed.InverseViewshed(tp, 1.6, dem, algs)
+    assert isinstance(iv, viewshed.InverseViewshed)
+    iv.calculate()
+
+    # alternative call with callback functions that print output
+    iv.calculate(print_timing_messages, print_percent_done)
+
+    iv.saveResults(work_folder.as_posix())
+    iv.saveResults(work_folder)
