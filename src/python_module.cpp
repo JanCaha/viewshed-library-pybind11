@@ -65,7 +65,8 @@ PYBIND11_MODULE( viewshed, m )
               []( const std::shared_ptr<Viewshed> v, const std::string path ) { v->saveResults( path ); } )
         .def( "saveResults", []( const std::shared_ptr<Viewshed> v, const py::object path )
               { v->saveResults( get_absolute_path( path, "path" ) ); } )
-        .def( "setMaxThreads", &Viewshed::setMaxThreads );
+        .def( "setMaxThreads", &Viewshed::setMaxThreads )
+        .def( "setVisibilityMask", &Viewshed::setVisibilityMask );
 
     // inverseviewshed
     py::class_<InverseViewshed, std::shared_ptr<InverseViewshed>>( m, "InverseViewshed" )
@@ -80,5 +81,7 @@ PYBIND11_MODULE( viewshed, m )
               []( const std::shared_ptr<InverseViewshed> v, const std::string path ) { v->saveResults( path ); } )
         .def( "saveResults", []( const std::shared_ptr<InverseViewshed> v, const py::object path )
               { v->saveResults( get_absolute_path( path, "path" ) ); } )
-        .def( "setMaxThreads", &InverseViewshed::setMaxThreads );
+        .def( "setMaxThreads", &InverseViewshed::setMaxThreads )
+        .def( "setVisibilityMask", &Viewshed::setVisibilityMask );
+    ;
 }
