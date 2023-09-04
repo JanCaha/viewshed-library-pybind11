@@ -12,7 +12,7 @@ on:
 
 jobs:
 
-  test:
+  Run-Test:
 
     strategy:
       matrix:
