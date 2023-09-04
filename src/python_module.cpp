@@ -23,6 +23,7 @@ PYBIND11_MODULE( viewshed, m )
     // library version
     py::object ver = py::cast( ViewshedLibrary::version() );
     m.attr( "version" ) = ver;
+    m.attr( "__version__" ) = ver;
 
     // visibility algorithms
     py::class_<VisibilityAlgs, std::shared_ptr<VisibilityAlgs>>( m, "VisibilityAlgorithms" )
