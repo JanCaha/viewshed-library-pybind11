@@ -5,14 +5,6 @@ import pytest
 import viewshed
 
 
-def print_percent_done(i: int, j: int) -> None:
-    print(f"{i}/{j}")
-
-
-def print_timing_messages(s: str, v: float) -> None:
-    print(f"{s}: {v}")
-
-
 def test_library() -> None:
     assert isinstance(viewshed.version, str)
     assert viewshed.version == "2.7.0"
@@ -58,6 +50,10 @@ def test_viewshed(
     work_folder: Path,
     dem: viewshed.ProjectedSquareCellRaster,
     viewpoint: viewshed.Point,
+    fn_print_percent_done,
+    fn_print_timing,
+    file_messages_percent,
+    file_messages_timing,
 ) -> None:
     algs = viewshed.VisibilityAlgorithms(False)
 
@@ -67,13 +63,26 @@ def test_viewshed(
     v.calculate()
 
     # alternative call with callback functions that print output
-    v.calculate(print_timing_messages, print_percent_done)
+    v.calculate(fn_print_timing, fn_print_percent_done)
 
     v.saveResults(work_folder.as_posix())
     v.saveResults(work_folder)
 
+    file_messages_percent.seek(0)
+    file_messages_timing.seek(0)
 
-def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRaster) -> None:
+    assert len(file_messages_percent.readlines()) == 113967
+    assert len(file_messages_timing.readlines()) == 3
+
+
+def test_inverse_viewshed(
+    work_folder: Path,
+    dem: viewshed.ProjectedSquareCellRaster,
+    fn_print_percent_done,
+    fn_print_timing,
+    file_messages_percent,
+    file_messages_timing,
+) -> None:
     algs = viewshed.VisibilityAlgorithms(False)
 
     tp = viewshed.Point(-336428.767, -1189102.785, dem, 0)
@@ -84,10 +93,16 @@ def test_inverse_viewshed(work_folder: Path, dem: viewshed.ProjectedSquareCellRa
     iv.calculate()
 
     # alternative call with callback functions that print output
-    iv.calculate(print_timing_messages, print_percent_done)
+    iv.calculate(fn_print_timing, fn_print_percent_done)
 
     iv.saveResults(work_folder.as_posix())
     iv.saveResults(work_folder)
+
+    file_messages_percent.seek(0)
+    file_messages_timing.seek(0)
+
+    assert len(file_messages_percent.readlines()) == 189945
+    assert len(file_messages_timing.readlines()) == 3
 
 
 def test_viewshed_mask(
@@ -95,6 +110,10 @@ def test_viewshed_mask(
     dem: viewshed.ProjectedSquareCellRaster,
     viewpoint: viewshed.Point,
     mask: viewshed.ProjectedSquareCellRaster,
+    fn_print_percent_done,
+    fn_print_timing,
+    file_messages_percent,
+    file_messages_timing,
 ) -> None:
     algs = viewshed.VisibilityAlgorithms(False)
 
@@ -106,7 +125,13 @@ def test_viewshed_mask(
     v.calculate()
 
     # alternative call with callback functions that print output
-    v.calculate(print_timing_messages, print_percent_done)
+    v.calculate(fn_print_timing, fn_print_percent_done)
 
     v.saveResults(work_folder.as_posix())
     v.saveResults(work_folder)
+
+    file_messages_percent.seek(0)
+    file_messages_timing.seek(0)
+
+    assert len(file_messages_percent.readlines()) == 84419
+    assert len(file_messages_timing.readlines()) == 3
