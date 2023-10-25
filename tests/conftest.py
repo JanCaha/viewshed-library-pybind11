@@ -1,4 +1,6 @@
+import io
 import shutil
+import typing
 from pathlib import Path
 
 import pytest
@@ -47,3 +49,29 @@ def work_folder() -> Path:
     path.mkdir(parents=True)
 
     return path
+
+
+@pytest.fixture(scope="function")
+def file_messages_percent() -> io.StringIO:
+    return io.StringIO()
+
+
+@pytest.fixture(scope="function")
+def file_messages_timing() -> io.StringIO:
+    return io.StringIO()
+
+
+@pytest.fixture(scope="function")
+def fn_print_percent_done(file_messages_percent: io.StringIO) -> typing.Callable[[int, int], None]:
+    def fn_p(i: int, j: int) -> None:
+        print(f"{i}/{j}", file=file_messages_percent)
+
+    return fn_p
+
+
+@pytest.fixture(scope="function")
+def fn_print_timing(file_messages_timing: io.StringIO) -> typing.Callable[[str, float], None]:
+    def fn_p(s: str, v: float) -> None:
+        print(f"{s}: {v}", file=file_messages_timing)
+
+    return fn_p
