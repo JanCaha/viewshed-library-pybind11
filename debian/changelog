@@ -1,3 +1,9 @@
+python3-viewshed (0.1.1-0ppa0) jammy; urgency=low
+  
+  * release for new versions of viewshed library and simplerasters
+
+ -- Jan Caha <jan.caha@outlook.com>  Tue, 31 Oct 2023 12:56:50 +0100
+
 python3-viewshed (0.1.0-0ppa0) jammy; urgency=low
   
   * first release
