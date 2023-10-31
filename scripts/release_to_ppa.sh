@@ -9,7 +9,7 @@ FOLDER=pybind_viewshed
 PACKAGE=python3-viewshed
 VERSION=$(grep "version = " setup.cfg| grep -E -o -e "[0-9\.]+" )
 
-rm -rf build dist .mypy_cache
+rm -rf build dist .mypy_cache .venv
 cd ..
 tar -acf "$PACKAGE"_"$VERSION".orig.tar.gz $FOLDER
 cd $FOLDER
