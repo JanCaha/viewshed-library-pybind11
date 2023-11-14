@@ -1,4 +1,4 @@
-name: Release to PPA
+name: Release to PPA, Release Docker
 
 on:
   workflow_run:
@@ -75,3 +75,34 @@ jobs:
         run: |
           cd ..
           dput ppa:jancaha/gis-tools "${PACKAGE}"_"${DEBIAN_VERSION}"_source.changes
+
+  Release-Docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+          with:
+            submodules: true
+
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v2
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+        
+        - name: Set Env and GA Output
+          id: version
+          run: |
+            echo "VERSION=$(grep "version = " setup.cfg | grep -E -o -e "[0-9\.]+")" >> $GITHUB_ENV
+            echo "VERSION=$(grep "version = " setup.cfg | grep -E -o -e "[0-9\.]+")" >> $GITHUB_OUTPUT
+        
+        - name: Build and push Docker image latest
+          uses: docker/build-push-action@v4
+          with:
+            file: docker/Dockerfile
+            context: docker/
+            push: true
+            tags: cahik/viewshed:latest-python
