@@ -43,7 +43,7 @@ jobs:
       - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install debhelper devscripts dput
+          sudo apt-get install debhelper devscripts dput dh-python
       
       - name: import gpg key 55C76CE00DD5C647
         run: |
