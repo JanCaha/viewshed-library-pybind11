@@ -1,0 +1,77 @@
+name: Release to PPA
+
+on:
+  workflow_run:
+    workflows: ["Test package"]
+    types:
+      - completed
+    branches:
+      - 'main'
+      - 'master'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PACKAGE: python3-viewshed
+        
+jobs:
+ 
+  Release-to-PPA:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            submodules: true
+
+      - name: Set env
+        run: |
+            echo "VERSION=$(grep "python3-viewshed (" debian/changelog -m 1 |  grep -E -o -e "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
+            echo "DEBIAN_VERSION=$(grep "python3-viewshed (" debian/changelog -m 1 |  grep -E -o -e "[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+)?")" >> $GITHUB_ENV
+            
+      - name: Print Version
+        run: |
+          echo "-----"
+          echo "Project Version"
+          echo ${PACKAGE}
+          echo ${VERSION}
+          echo ${DEBIAN_VERSION}
+          echo "-----"
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install debhelper devscripts dput
+      
+      - name: import gpg key 55C76CE00DD5C647
+        run: |
+          echo "${PGP_PRIVATE_KEY}" | base64 --decode | gpg --batch --quiet --import
+          echo "${PGP_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback -u 55C76CE00DD5C647 --dry-run --sign README.md
+        env:
+          PGP_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY }}
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+      
+      - name: Create tar.gz package
+        run: |
+          cd ..
+          dir
+          tar -acf "${PACKAGE}"_"${VERSION}".orig.tar.gz cpp-viewshed-library
+          ls -l
+
+      - name: Debuild
+        run: debuild -S -sa -d
+        env:
+          DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
+          DEBSIGN_KEYID: 55C76CE00DD5C647
+      
+      - name: Show Files
+        run: |
+          cd ..
+          ls -l
+
+      - name: Dput to Repo
+        run: |
+          cd ..
+          dput ppa:jancaha/gis-tools "${PACKAGE}"_"${DEBIAN_VERSION}"_source.changes
