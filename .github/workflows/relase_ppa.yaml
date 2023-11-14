@@ -57,7 +57,7 @@ jobs:
         run: |
           cd ..
           dir
-          tar -acf "${PACKAGE}"_"${VERSION}".orig.tar.gz cpp-viewshed-library
+          tar -acf "${PACKAGE}"_"${VERSION}".orig.tar.gz viewshed-library-pybind11
           ls -l
 
       - name: Debuild
