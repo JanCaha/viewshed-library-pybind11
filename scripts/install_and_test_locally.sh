@@ -14,7 +14,7 @@ fi
 
 install_viewshed_package(){
     pip uninstall viewshed -y
-    python3 setup.py install
+    pip install .
 }
 
 source $VENV_FOLDER/bin/activate

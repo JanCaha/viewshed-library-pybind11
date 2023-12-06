@@ -1,7 +1,12 @@
 #!bin/bash
+# DEBEMAIL=jan.caha@outlook.com 
+# DEBFULLNAME="Jan Caha"
 
 set -u
 set -e
+
+# dch -i "CHANGELOG TEXT"
+# dch -r
 
 PWD=`pwd`
 
@@ -12,9 +17,9 @@ DEBIAN_VERSION=$(grep "python3-viewshed (" debian/changelog -m 1 |  grep -E -o -
 
 rm -rf build dist .mypy_cache .venv
 cd ..
-tar -acf "$PACKAGE"_"$MAIN_VERSION".orig.tar.gz $FOLDER
+# tar --exclude='.git' --exclude='tests' --exclude='scripts' --exclude=".github" --exclude=".vscode" --exclude="docker" -acf "$PACKAGE"_"$MAIN_VERSION".orig.tar.gz $FOLDER
 cd $FOLDER
 debuild -S -sa
 cd ..
-dput ppa:jancaha/gis-tools "$PACKAGE"_"$DEBIAN_VERSION"ppa0_source.changes
-rm $PACKAGE*
+dput ppa:jancaha/gis-tools "$PACKAGE"_"$DEBIAN_VERSION"_source.changes --passive
+# rm $PACKAGE*

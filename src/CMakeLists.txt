@@ -18,20 +18,22 @@ include_directories(
 )
 
 set(SOURCES
-    src/python_module.cpp
-    src/visibility_algorithms.h
-    src/visibility_algorithms.cpp
-    src/python_objects_utils.h
-    src/python_objects_utils.cpp
+    python_module.cpp
+    visibility_algorithms.h
+    visibility_algorithms.cpp
+    python_objects_utils.h
+    python_objects_utils.cpp
 )
 
 add_subdirectory(pybind11)
 pybind11_add_module(viewshed ${SOURCES})
 
+target_include_directories(viewshed PRIVATE ${CMAKE_SOURCE_DIR})
+
 target_compile_definitions(viewshed
     PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
 
-target_link_libraries(viewshed PRIVATE 
+target_link_libraries(viewshed PRIVATE
     SimpleRasters::simplerasters
     Viewshed::viewshed
     GDAL::GDAL
