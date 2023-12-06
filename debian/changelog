@@ -1,8 +1,8 @@
-python3-viewshed (0.1.2-1) jammy; urgency=low
+python3-viewshed (0.1.2-2) jammy; urgency=low
   
   * change versioning - version of python package - debian packaging
 
- -- Jan Caha <jan.caha@outlook.com>  Tue, 14 Nov 2023 21:15:51 +0100
+ -- Jan Caha <jan.caha@outlook.com>  Wed, 06 Dec 2023 08:33:12 +0100
 
 python3-viewshed (0.1.1-1ppa0) jammy; urgency=low
   
