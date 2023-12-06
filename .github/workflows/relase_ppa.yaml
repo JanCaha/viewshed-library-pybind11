@@ -8,7 +8,17 @@ on:
     branches:
       - 'main'
       - 'master'
-
+  push:
+    branches:
+      - 'main'
+      - 'master'
+    paths:
+      - debian/changelog
+      - setup.cfg
+      - setup.py
+      - pyproject.toml
+      - .github/wrokflows/release_ppa.yaml
+      
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PACKAGE: python3-viewshed
