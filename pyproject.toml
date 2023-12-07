@@ -1,11 +1,47 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel",
-    "ninja",
-    "cmake>=3.12",
+requires = ["py-build-cmake~=0.1.8", "pybind11", "pybind11-stubgen"]
+build-backend = "py_build_cmake.build"
+
+[project]
+name = "viewshed"
+readme = "README.md"
+version = "0.1.3"
+description = "Python package to make using viewshed library easier, directly from Python."
+requires-python = ">=3.8"
+license = { "file" = "LICENSE" }
+authors = [{ "name" = "Jan Caha", "email" = "jan.caha@outlook.com" }]
+keywords = ["addition", "subtraction", "pybind11"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
 ]
-build-backend = "setuptools.build_meta"
+urls = { "Documentation" = "https://github.com/JanCaha/viewshed-library-pybind11" }
+dependencies = []
+
+[tool.py-build-cmake.module]
+directory = "src_python/"
+
+[tool.py-build-cmake.sdist]
+include = ["CMakeLists.txt", "cmake/*.cmake", "src/*.cpp", "src/*.h"]
+
+[tool.py-build-cmake.cmake]
+minimum_version = "3.17"
+build_type = "Release"
+source_path = "."
+build_args = ["-j"]
+install_components = ["python_modules"]
+options = { "WITH_PY_STUBS:BOOL" = "On" }
+
+[tool.py-build-cmake.stubgen]
+args = ["-v"]
 
 [tool.isort]
 profile = "black"

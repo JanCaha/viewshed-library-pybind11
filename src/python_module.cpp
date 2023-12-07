@@ -18,7 +18,7 @@ using viewshed::InverseViewshed;
 using viewshed::Point;
 using viewshed::Viewshed;
 
-PYBIND11_MODULE( viewshed, m )
+PYBIND11_MODULE( _viewshed, m )
 {
     m.doc() = "Python interface for viewshed library.";
 

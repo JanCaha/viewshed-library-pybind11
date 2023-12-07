@@ -11,7 +11,7 @@ find_package(SimpleRasters REQUIRED)
 find_package(Viewshed REQUIRED)
 
 include_directories(
-    impleRasters::simplerasters
+    SimpleRasters::simplerasters
     Viewshed::viewshed
     src
     pybind11/incude
@@ -25,14 +25,52 @@ set(SOURCES
     src/python_objects_utils.cpp
 )
 
-add_subdirectory(pybind11)
-pybind11_add_module(viewshed ${SOURCES})
+# Find the pybind11 package
+include(cmake/QueryPythonForPybind11.cmake)
+find_pybind11_python_first()
 
-target_compile_definitions(viewshed
-    PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+pybind11_add_module(_viewshed ${SOURCES})
 
-target_link_libraries(viewshed PRIVATE 
+target_compile_definitions(_viewshed PRIVATE
+    MODULE_NAME=$<TARGET_FILE_BASE_NAME:_viewshed>
+)
+
+target_include_directories(_viewshed PRIVATE ${CMAKE_SOURCE_DIR})
+
+target_link_libraries(_viewshed PRIVATE
     SimpleRasters::simplerasters
     Viewshed::viewshed
     GDAL::GDAL
 )
+
+# Hide all symbols by default (including external libraries on Linux)
+set_target_properties(_viewshed PROPERTIES
+    CXX_VISIBILITY_PRESET "hidden"
+    VISIBILITY_INLINES_HIDDEN true)
+
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_link_options(_viewshed PRIVATE "LINKER:--exclude-libs,ALL")
+endif()
+
+install(TARGETS _viewshed
+    EXCLUDE_FROM_ALL
+    COMPONENT python_modules
+    DESTINATION ${PY_BUILD_CMAKE_MODULE_NAME})
+
+# Install the debug file for the Python module (Windows only)
+if(WIN32)
+    install(FILES $<TARGET_PDB_FILE:_add_module>
+        EXCLUDE_FROM_ALL
+        COMPONENT python_modules
+        DESTINATION ${PY_BUILD_CMAKE_MODULE_NAME}
+        OPTIONAL)
+endif()
+
+option(WITH_PY_STUBS
+    "Generate Python stub files (.pyi) for the Python module." On)
+
+if(WITH_PY_STUBS)
+    include(cmake/Pybind11Stubgen.cmake)
+    pybind11_stubgen(_viewshed)
+    pybind11_stubgen_install(_viewshed ${PY_BUILD_CMAKE_MODULE_NAME})
+endif()

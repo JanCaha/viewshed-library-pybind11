@@ -5,3 +5,4 @@ dist
 viewshed.egg-info
 .venv
 debian/files
+.py-build-cmake_cache

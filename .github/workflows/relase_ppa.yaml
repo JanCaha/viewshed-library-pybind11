@@ -63,13 +63,6 @@ jobs:
           PGP_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY }}
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
       
-      - name: Create tar.gz package
-        run: |
-          cd ..
-          dir
-          tar -acf "${PACKAGE}"_"${VERSION}".orig.tar.gz viewshed-library-pybind11
-          ls -l
-
       - name: Debuild
         run: debuild -S -sa -d
         env:
