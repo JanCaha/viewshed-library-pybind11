@@ -2,7 +2,7 @@ import viewshed
 
 
 def test_library_version() -> None:
-    current_version = "2.7.3"
+    current_version = "2.9.0"
     assert isinstance(viewshed.version, str)
     assert viewshed.version == current_version
     assert viewshed.__version__ == current_version
