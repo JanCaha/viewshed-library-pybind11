@@ -8,30 +8,19 @@ else
 
     python3 -m venv $VENV_FOLDER --symlinks # --system-site-packages 
     source $VENV_FOLDER/bin/activate
-    pip install pytest wheel
+    pip install pytest wheel py-build-cmake
     deactivate
 fi
 
-install_viewshed_package(){
-    pip uninstall viewshed -y
-    pip install .
-}
 
 source $VENV_FOLDER/bin/activate
 
 rm -rf build
 rm -rf dist
+rm -rf .py-build-cmake_cache
 
-# install the package
-install_viewshed_package
-
-# regenerate stub file from installed package
-python3 prepare_stub_template.py
-
-# install again with proper stub package
-install_viewshed_package
-
-python3 setup.py bdist_wheel
+pip uninstall viewshed -y
+pip install .
 
 # run tests
 pytest -vv -s
