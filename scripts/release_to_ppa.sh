@@ -15,7 +15,7 @@ PACKAGE=python3-viewshed
 MAIN_VERSION=$(grep "python3-viewshed (" debian/changelog -m 1 |  grep -E -o -e "[0-9]+\.[0-9]+\.[0-9]+")
 DEBIAN_VERSION=$(grep "python3-viewshed (" debian/changelog -m 1 |  grep -E -o -e "[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+)?")
 
-rm -rf build dist .mypy_cache .venv
+rm -rf build dist .mypy_cache .venv .py-build-cmake_cache
 cd ..
 # tar --exclude='.git' --exclude='tests' --exclude='scripts' --exclude=".github" --exclude=".vscode" --exclude="docker" -acf "$PACKAGE"_"$MAIN_VERSION".orig.tar.gz $FOLDER
 cd $FOLDER
