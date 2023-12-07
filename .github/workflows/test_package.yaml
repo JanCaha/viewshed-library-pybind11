@@ -37,7 +37,7 @@ jobs:
       
       - name: Install pip packages
         run: |
-          pip install wheel pytest py-build-cmake
+          pip install wheel pytest py-build-cmake build
 
       - uses: actions/checkout@v4
         with:
@@ -45,8 +45,8 @@ jobs:
 
       - name: Install package
         run: |
-          pip install build
           pip install .
+          python -m build .
 
       - name: Run tests
         run: pytest -vv -s
