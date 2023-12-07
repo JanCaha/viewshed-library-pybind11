@@ -1,5 +1,5 @@
 [build-system]
-requires = ["py-build-cmake~=0.1.8"]
+requires = ["py-build-cmake~=0.1.8", "pybind11", "pybind11-stubgen"]
 build-backend = "py_build_cmake.build"
 
 [project]
@@ -30,14 +30,15 @@ dependencies = []
 directory = "src_python/"
 
 [tool.py-build-cmake.sdist]
-include = ["CMakeLists.txt", "src/*"]
+include = ["CMakeLists.txt", "cmake/*.cmake", "src/*.cpp", "src/*.h"]
 
 [tool.py-build-cmake.cmake]
 minimum_version = "3.17"
 build_type = "Release"
-source_path = "src"
+source_path = "."
 build_args = ["-j"]
 install_components = ["python_modules"]
+options = { "WITH_PY_STUBS:BOOL" = "On" }
 
 [tool.isort]
 profile = "black"
