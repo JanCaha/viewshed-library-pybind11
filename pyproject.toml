@@ -40,6 +40,9 @@ build_args = ["-j"]
 install_components = ["python_modules"]
 options = { "WITH_PY_STUBS:BOOL" = "On" }
 
+[tool.py-build-cmake.stubgen]
+args = ["-v"]
+
 [tool.isort]
 profile = "black"
 
