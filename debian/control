@@ -1,0 +1,12 @@
+Source: python3-viewshed
+Section: science
+Priority: optional
+Maintainer: Jan Caha <jan.caha@outlook.com>
+Build-Depends: cmake, build-essential, ninja-build, dh-make, clang, dh-python, python3-all, python3-setuptools, python3-pybind11, libpython3-dev, gdal-bin, libgdal-dev, simplerasters, viewshed
+Homepage: <https://www.cahik.cz>
+
+Package: python3-viewshed
+Architecture: any
+Depends: viewshed, simplerasters, python3
+Description: Python 3 bindings for viewshed library
+    Library for Calculation of visibility indices for both viewshed and inverse viewshed from Python.
