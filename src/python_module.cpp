@@ -30,14 +30,31 @@ PYBIND11_MODULE( _viewshed, m )
     // visibility algorithms
     py::class_<VisibilityAlgs, std::shared_ptr<VisibilityAlgs>>( m, "VisibilityAlgorithms",
                                                                  "Class for storing visibility indices algorithms." )
-        .def( py::init( []() { return std::make_shared<VisibilityAlgs>( false ); } ),
+        .def( py::init( []() { return std::make_shared<VisibilityAlgs>(); } ),
               "Build all algorithms. With default NoData value." )
-        .def( py::init( []( const double &noData ) { return std::make_shared<VisibilityAlgs>( false, noData ); } ),
+        .def( py::init( []( const double &noData ) { return std::make_shared<VisibilityAlgs>( noData ); } ),
               "Build all algorithms with provided NoData value." )
-        .def( py::init( []( const bool &single ) { return std::make_shared<VisibilityAlgs>( single ); } ),
+        .def( py::init(
+                  []( const bool &single )
+                  {
+                      std::shared_ptr<VisibilityAlgs> algs = std::make_shared<VisibilityAlgs>();
+                      if ( !single )
+                      {
+                          algs->addAll();
+                      }
+                      return algs;
+                  } ),
               "Build only boolean visibility with default NoData value." )
-        .def( py::init( []( const bool &single, const double &noData )
-                        { return std::make_shared<VisibilityAlgs>( single, noData ); } ),
+        .def( py::init(
+                  []( const bool &single, const double &noData )
+                  {
+                      std::shared_ptr<VisibilityAlgs> algs = std::make_shared<VisibilityAlgs>( noData );
+                      if ( !single )
+                      {
+                          algs->addAll();
+                      }
+                      return algs;
+                  } ),
               "Build only boolean visibility with provided NoData value." )
         .def( "size", &VisibilityAlgs::size );
 
@@ -86,8 +103,13 @@ PYBIND11_MODULE( _viewshed, m )
             { v->saveResults( get_absolute_path( path, "path" ) ); },
             "Store results at specified pathlib.Path." )
         .def( "setMaxThreads", &Viewshed::setMaxThreads, "Set maximum number of threads to use." )
-        .def( "setVisibilityMask", &Viewshed::setVisibilityMask,
-              "Specifiy visibility mask to use during calculation." );
+        .def( "setVisibilityMask", &Viewshed::setVisibilityMask, "Specifiy visibility mask to use during calculation." )
+        .def( "calculateVisibilityMask", &Viewshed::calculateVisibilityMask, "Calculate visibility mask" )
+        .def(
+            "saveVisibilityRaster",
+            []( const std::shared_ptr<Viewshed> v, const py::object path )
+            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
+            "Save visibility raster" );
 
     // inverseviewshed
     py::class_<InverseViewshed, std::shared_ptr<InverseViewshed>>( m, "InverseViewshed",
@@ -113,7 +135,12 @@ PYBIND11_MODULE( _viewshed, m )
             { v->saveResults( get_absolute_path( path, "path" ) ); },
             "Store results at specified pathlib.Path." )
         .def( "setMaxThreads", &InverseViewshed::setMaxThreads, "Set maximum number of threads to use." )
-        .def( "setVisibilityMask", &Viewshed::setVisibilityMask,
-              "Specifiy visibility mask to use during calculation." );
-    ;
+        .def( "setVisibilityMask", &InverseViewshed::setVisibilityMask,
+              "Specifiy visibility mask to use during calculation." )
+        .def( "calculateVisibilityMask", &InverseViewshed::calculateVisibilityMask, "Calculate visibility mask" )
+        .def(
+            "saveVisibilityRaster",
+            []( const std::shared_ptr<InverseViewshed> v, const py::object path )
+            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
+            "Save visibility raster" );
 }

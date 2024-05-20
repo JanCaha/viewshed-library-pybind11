@@ -12,12 +12,15 @@ using VisibilityAlgoritms = std::vector<std::shared_ptr<AbstractViewshedAlgorith
 class VisibilityAlgs
 {
   public:
-    VisibilityAlgs( bool singleAlgorithm, double noData = std::numeric_limits<double>::quiet_NaN() );
+    VisibilityAlgs( double noData = std::numeric_limits<double>::quiet_NaN() );
 
     size_t size();
 
     std::shared_ptr<VisibilityAlgoritms> get();
 
+    void addAll();
+
   private:
     std::shared_ptr<VisibilityAlgoritms> mAlgs = std::make_shared<VisibilityAlgoritms>();
+    double mNoData = std::numeric_limits<double>::quiet_NaN();
 };
