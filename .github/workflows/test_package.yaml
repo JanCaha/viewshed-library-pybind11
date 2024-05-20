@@ -28,7 +28,13 @@ jobs:
         with:
           python-version: "${{ matrix.python-version }}"
           architecture: 'x64'
-
+       
+      - name: Install GDAL
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ppa
+          sudo apt update
+          sudo apt-get -y install gdal-bin libgdal-dev
+              
       - name: Install requirments
         run: |
           sudo add-apt-repository ppa:jancaha/gis-tools
