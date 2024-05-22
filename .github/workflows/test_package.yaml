@@ -43,11 +43,14 @@ jobs:
       
       - name: Install pip packages
         run: |
-          pip install wheel pytest py-build-cmake build
+          pip install pip venv
 
       - uses: actions/checkout@v4
         with:
           submodules: true
+      
+      - name: Test in venv
+        run: ./scripts/install_and_test_locally.sh
 
       - name: Install package
         run: |
