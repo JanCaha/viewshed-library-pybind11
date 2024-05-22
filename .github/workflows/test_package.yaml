@@ -24,7 +24,7 @@ jobs:
 
     steps:
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python-version }}"
           architecture: 'x64'
@@ -57,7 +57,7 @@ jobs:
       - name: Run tests
         run: pytest -vv -s
       
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: "contains(${{ matrix.python-version }}, '3.10')"
         with:
           name: viewshed

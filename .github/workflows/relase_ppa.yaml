@@ -31,12 +31,12 @@ jobs:
     steps:
 
         - name: Checkout
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             submodules: true
 
         - name: Log in to Docker Hub
-          uses: docker/login-action@v2
+          uses: docker/login-action@v3
           with:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
@@ -48,7 +48,7 @@ jobs:
             echo "VERSION=$(grep "^version = " pyproject.toml | grep -E -o -e "[0-9\.]+" | head -n 1)" >> $GITHUB_OUTPUT
         
         - name: Build and push Docker image latest
-          uses: docker/build-push-action@v4
+          uses: docker/build-push-action@v5
           with:
             file: docker/Dockerfile
             context: docker/
