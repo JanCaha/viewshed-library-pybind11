@@ -47,7 +47,7 @@ jobs:
       
       - name: Install pip packages
         run: |
-          pip install wheel py-build-cmake build    
+          pip install wheel py-build-cmake build pytest
 
       - name: Install package
         run: |
