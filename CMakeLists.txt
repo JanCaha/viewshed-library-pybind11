@@ -40,7 +40,7 @@ target_compile_definitions(_viewshed PRIVATE
 target_include_directories(_viewshed PRIVATE ${CMAKE_SOURCE_DIR})
 
 target_link_libraries(_viewshed PRIVATE
-    SimpleRasters::simplerasters
+    SimpleRasters::SimpleRasters
     Viewshed::viewshed
     GDAL::GDAL
 )

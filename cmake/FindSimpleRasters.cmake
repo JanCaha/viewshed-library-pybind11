@@ -21,6 +21,7 @@ find_library(simplerasters_LIBRARY
     /usr/lib
     /usr/lib64
     /usr/local/lib
+    /usr/lib/x86_64-linux-gnu
     "${CMAKE_PREFIX_PATH}/lib"
     ${simplerasters_PKGCONF_LIBRARY_DIRS}
 )
