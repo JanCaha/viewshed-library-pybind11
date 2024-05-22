@@ -45,8 +45,9 @@ jobs:
         with:
           submodules: true
       
-      - name: Test in venv
-        run: ./scripts/install_and_test_locally.sh
+      - name: Install pip packages
+        run: |
+          pip install wheel py-build-cmake build    
 
       - name: Install package
         run: |
