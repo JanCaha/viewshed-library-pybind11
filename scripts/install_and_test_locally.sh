@@ -21,6 +21,7 @@ rm -rf .py-build-cmake_cache
 
 pip uninstall viewshed -y
 pip install .
+python -m build .
 
 # run tests
 pytest -vv -s
