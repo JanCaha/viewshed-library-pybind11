@@ -14,6 +14,8 @@ The `cmake` and `git` need to be installed for the compilation to work.
 
 ## Docker
 
+Docker build is handled from viewshed library repository [here](https://github.com/JanCaha/cpp-viewshed-library).
+ 
 There is also docker container with the Python bindings ready, which can be obtained using:
 
 ```bash
