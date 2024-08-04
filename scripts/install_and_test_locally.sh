@@ -6,9 +6,9 @@ if [ -d "$VENV_FOLDER" ];then
 else
     echo "Creating the VENV $VENV_FOLDER."
 
-    python3 -m venv $VENV_FOLDER --symlinks # --system-site-packages 
+    python3 -m venv $VENV_FOLDER # --symlinks # --system-site-packages 
     source $VENV_FOLDER/bin/activate
-    pip install pytest wheel py-build-cmake
+    pip install pytest wheel build
     deactivate
 fi
 

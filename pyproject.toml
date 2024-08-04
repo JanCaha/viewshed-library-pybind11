@@ -38,7 +38,9 @@ build_type = "Release"
 source_path = "."
 build_args = ["-j"]
 install_components = ["python_modules"]
-options = { "WITH_PY_STUBS:BOOL" = "On" }
+
+[tool.py-build-cmake.cmake.options]
+"WITH_PY_STUBS:BOOL" = "On"
 
 [tool.py-build-cmake.stubgen]
 args = ["-v"]
