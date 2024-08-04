@@ -1,5 +1,5 @@
 [build-system]
-requires = ["py-build-cmake~=0.1.8", "pybind11", "pybind11-stubgen~=0.16"]
+requires = ["py-build-cmake~=0.1.8", "pybind11~=2.12", "pybind11-stubgen~=0.16"]
 build-backend = "py_build_cmake.build"
 
 [project]
