@@ -84,3 +84,32 @@ def test_viewshed_visibility_raster(
     v.saveVisibilityRaster(visibility_raster)
 
     assert visibility_raster.exists()
+
+def test_viewshed_calculation_time(
+    work_folder: Path,
+    dem: viewshed.ProjectedSquareCellRaster,
+    viewpoint: viewshed.Point,
+    mask: viewshed.ProjectedSquareCellRaster,
+    fn_print_percent_done,
+    fn_print_timing,
+    file_messages_percent,
+    file_messages_timing,
+) -> None:
+    algs = viewshed.VisibilityAlgorithms(False)
+
+    v = viewshed.Viewshed(viewpoint, dem, algs)
+    assert isinstance(v, viewshed.Viewshed)
+
+    visibility_raster = work_folder / "visibility_raster.tif"
+
+    v.calculateVisibilityMask()
+    time_visibility_mask = v.calculationTime()
+
+    assert time_visibility_mask < 0.00001
+
+    v.calculate()
+    time_visibility = v.calculationTime()
+
+    assert time_visibility < 0.02
+
+    assert time_visibility > time_visibility_mask

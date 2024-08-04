@@ -109,7 +109,8 @@ PYBIND11_MODULE( _viewshed, m )
             "saveVisibilityRaster",
             []( const std::shared_ptr<Viewshed> v, const py::object path )
             { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
-            "Save visibility raster" );
+            "Save visibility raster" )
+        .def( "calculationTime", &Viewshed::parseLastedSeconds, "Seconds that processing of last operation lasted." );
 
     // inverseviewshed
     py::class_<InverseViewshed, std::shared_ptr<InverseViewshed>>( m, "InverseViewshed",
@@ -142,5 +143,8 @@ PYBIND11_MODULE( _viewshed, m )
             "saveVisibilityRaster",
             []( const std::shared_ptr<InverseViewshed> v, const py::object path )
             { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
-            "Save visibility raster" );
+            "Save visibility raster" )
+        .def( "calculationTime", &InverseViewshed::parseLastedSeconds,
+              "Seconds that processing of last operation lasted." );
+    ;
 }
