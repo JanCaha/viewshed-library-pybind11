@@ -72,6 +72,7 @@ option(WITH_PY_STUBS
     "Generate Python stub files (.pyi) for the Python module." On)
 
 if(WITH_PY_STUBS)
+    message(STATUS "Generating Python stub files for the Python module.")
     include(cmake/Pybind11Stubgen.cmake)
     pybind11_stubgen(_viewshed)
     pybind11_stubgen_install(_viewshed ${PY_BUILD_CMAKE_MODULE_NAME})
