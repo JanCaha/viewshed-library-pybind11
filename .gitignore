@@ -6,3 +6,8 @@ viewshed.egg-info
 .venv
 debian/files
 .py-build-cmake_cache
+debian/.debhelper
+debhelper/debhelper-build-stamp
+debian/python_install
+debian/python-viewshed
+debian/python
