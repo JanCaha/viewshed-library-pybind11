@@ -1,0 +1,13 @@
+Source: python-viewshed
+Section: python
+Priority: extra
+Maintainer: Jan Doe <jandoe@example.org>
+Build-Depends: debhelper (>= 9), python3, pybind11-dev, python3-pybind11, cmake, build-essential, ninja-build, viewshed, viewshed-bin, simplerasters
+Standards-Version: 3.9.5
+
+Package: python-viewshed
+Architecture: any
+Pre-Depends: dpkg (>= 1.16.1), python3, ${misc:Pre-Depends}
+Depends: ${misc:Depends}, gdal-bin, libgdal-dev, viewshed, viewshed-bin, simplerasters
+Description: Python bindings for Viewshed library
+  Useful for for simple calculation of viewshed analyses from Python.

@@ -1,0 +1,11 @@
+python-viewshed (0.7.5) jammy; urgency=low
+
+  * Ubuntu build system. 
+
+ -- Jan Caha <jan.caha@outlook.com>  Mon, 16 Sep 2024 10:54:34 +0200
+
+python-viewshed (0.7.4) jammy; urgency=low
+
+  * Initial release. 
+
+ -- Jan Caha <jan.caha@outlook.com>  Mon, 05 Aug 2024 16:34:34 +0200

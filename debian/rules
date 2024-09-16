@@ -1,0 +1,18 @@
+#! /usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+export VENV_FOLDER=.venv
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+
+override_dh_auto_build:
+	python3 -m venv $(VENV_FOLDER)
+	. "$${PWD}/$(VENV_FOLDER)/bin/activate"; \
+	set -x; \
+	python -m pip install wheel build; \
+	python -m build .; \
+	python -m pip install --target debian/python_install . 
