@@ -1,6 +1,7 @@
-python-viewshed (0.7.5) jammy; urgency=low
+python-viewshed (0.7.6) jammy; urgency=low
 
-  * Ubuntu build system. 
+  * Ubuntu build system.
+  * Bump version to solve PPA issue. 
 
  -- Jan Caha <jan.caha@outlook.com>  Mon, 16 Sep 2024 10:54:34 +0200
 
