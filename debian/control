@@ -2,7 +2,7 @@ Source: python-viewshed
 Section: python
 Priority: extra
 Maintainer: Jan Doe <jandoe@example.org>
-Build-Depends: debhelper (>= 9), python3, pybind11-dev, python3-pybind11, cmake, build-essential, ninja-build, viewshed, viewshed-bin, simplerasters
+Build-Depends: debhelper (>= 9), python3, pybind11-dev, python3-pybind11, python3-venv, cmake, build-essential, ninja-build, viewshed, viewshed-bin, simplerasters
 Standards-Version: 3.9.5
 
 Package: python-viewshed
