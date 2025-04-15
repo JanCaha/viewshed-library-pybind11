@@ -1,6 +1,20 @@
 [build-system]
-requires = ["py-build-cmake", "pybind11", "pybind11-stubgen"]
-build-backend = "py_build_cmake.build"
+requires = [
+    "setuptools",
+    "wheel",
+    "cmake>=3.18",
+    "scikit-build-core",
+    "pybind11",
+    "pybind11-stubgen"
+    ]
+build-backend = "scikit_build_core.build"
+
+# Exclude directories from the build
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["viewshed"]
+
+sdist.include = ["src/viewshed//*.pyi", "src/viewshed/py.typed"]
 
 [project]
 name = "viewshed"
@@ -26,27 +40,11 @@ classifiers = [
 urls = { "Documentation" = "https://github.com/JanCaha/viewshed-library-pybind11" }
 dependencies = []
 
-[tool.py-build-cmake.module]
-directory = "src_python/"
-
-[tool.py-build-cmake.sdist]
-include = ["CMakeLists.txt", "cmake/*.cmake", "src/*.cpp", "src/*.h"]
-
-[tool.py-build-cmake.cmake]
-minimum_version = "3.17"
-build_type = "Release"
-source_path = "."
-build_args = ["-j"]
-install_components = ["python_modules"]
-
-[tool.py-build-cmake.cmake.options]
-"WITH_PY_STUBS:BOOL" = "On"
-
-[tool.py-build-cmake.stubgen]
-args = ["-v"]
-
 [tool.isort]
 profile = "black"
+
+[tool.black]
+line-length = 120
 
 [tool.mypy]
 files = "setup.py"
