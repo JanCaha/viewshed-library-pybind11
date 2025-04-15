@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(viewshed_pybind)
+project(viewshed_pybind VERSION 0.7.6)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
