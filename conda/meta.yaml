@@ -1,0 +1,44 @@
+package:
+  name: viewshed
+  version: "0.7.6"
+
+source:
+  path: ..
+
+build:
+  noarch: false
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - pip
+    - scikit-build-core
+    - setuptools
+    - pybind11
+    - pybind11-stubgen
+    - cmake
+    - ninja 
+    - libgdal
+    - libsimplerasters
+    - libviewshed
+  run:
+    - python
+    - libviewshed
+    - libgdal
+    - libsimplerasters
+    
+about:
+  home: https://github.com/JanCaha/viewshed-library-pybind11
+  license: MIT
+  summary: "Minimalistic python interface for C++ library viewshed. Makes running examples and experiments much easier"
+
+extra:
+  recipe-maintainers:
+    - JanCaha
+  channels:
+    - conda-forge
