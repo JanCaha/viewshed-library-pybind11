@@ -1,0 +1,56 @@
+name: Prepare stubs
+
+on:
+  push:
+    paths:
+      - src/**
+      - cpp_module/**
+      - tests/**
+      - pyproject.toml
+      - CMakeLists.txt
+      - .github/workflows/prepare_stubs.yaml
+
+jobs:
+
+  Prepare-Stubs:
+
+    name: "Test package in Python 3.12"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: 'x64'
+       
+      - name: Install GDAL
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt update
+          sudo apt-get -y install gdal-bin libgdal-dev
+
+      - name: Install pybind11
+        run: |
+          sudo apt-get install pybind11-dev python3-pybind11
+
+      - name: Install requirements
+        run: |
+          sudo add-apt-repository ppa:jancaha/gis-tools
+          sudo apt-get update
+          sudo apt-get install viewshed-bin
+      
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      
+      - name: Build manually
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DWITH_PY_STUBS=ON
+          cmake --build build --config Release
+      
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+            commit_message: Changes to stubs
+            file_pattern: 'src/viewshed/*.pyi'
