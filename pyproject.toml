@@ -2,7 +2,6 @@
 requires = [
     "setuptools",
     "wheel",
-    "cmake>=3.18",
     "scikit-build-core",
     "pybind11",
     "pybind11-stubgen"
