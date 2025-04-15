@@ -4,9 +4,8 @@ on:
   push:
     paths:
       - src/**
+      - cpp_module/**
       - tests/**
-      - setup.py
-      - setup.cfg
       - pyproject.toml
       - CMakeLists.txt
       - .github/workflows/test_package.yaml
@@ -40,7 +39,7 @@ jobs:
         run: |
           sudo apt-get install pybind11-dev python3-pybind11
 
-      - name: Install requirments
+      - name: Install requirements
         run: |
           sudo add-apt-repository ppa:jancaha/gis-tools
           sudo apt-get update
@@ -49,10 +48,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      
+
       - name: Install pip packages
         run: |
-          pip install wheel py-build-cmake build pytest
+          pip install wheel build pytest
 
       - name: Install package
         run: |
