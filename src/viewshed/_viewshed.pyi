@@ -5,27 +5,14 @@ Python interface for viewshed library.
 from __future__ import annotations
 import typing
 
-__all__ = [
-    "InverseViewshed",
-    "Point",
-    "ProjectedSquareCellRaster",
-    "Viewshed",
-    "VisibilityAlgorithms",
-    "version",
-]
+__all__ = ["InverseViewshed", "Point", "ProjectedSquareCellRaster", "Viewshed", "VisibilityAlgorithms", "version"]
 
 class InverseViewshed:
     """
     Class for calculation of visibility of point.
     """
 
-    def __init__(
-        self,
-        arg0: Point,
-        arg1: float,
-        arg2: ProjectedSquareCellRaster,
-        arg3: VisibilityAlgorithms,
-    ) -> None:
+    def __init__(self, arg0: Point, arg1: float, arg2: ProjectedSquareCellRaster, arg3: VisibilityAlgorithms) -> None:
         """
         Create class from target point, observer's offset, dem and visibility indices algorithms.
         """
@@ -37,11 +24,7 @@ class InverseViewshed:
         """
 
     @typing.overload
-    def calculate(
-        self,
-        arg0: typing.Callable[[str, float], None],
-        arg1: typing.Callable[[int, int], None],
-    ) -> None:
+    def calculate(self, arg0: typing.Callable[[str, float], None], arg1: typing.Callable[[int, int], None]) -> None:
         """
         Calculate with specified callbacks.
         """
@@ -88,9 +71,7 @@ class Point:
     Point representing either observer or target point.
     """
 
-    def __init__(
-        self, arg0: float, arg1: float, arg2: ProjectedSquareCellRaster, arg3: float
-    ) -> None:
+    def __init__(self, arg0: float, arg1: float, arg2: ProjectedSquareCellRaster, arg3: float) -> None:
         """
         Construct using coordinates x,y, ProjectedSquareCellRaster and offset from surface.
         """
@@ -138,9 +119,7 @@ class Viewshed:
     Class for calculation of visibility from point.
     """
 
-    def __init__(
-        self, arg0: Point, arg1: ProjectedSquareCellRaster, arg2: VisibilityAlgorithms
-    ) -> None:
+    def __init__(self, arg0: Point, arg1: ProjectedSquareCellRaster, arg2: VisibilityAlgorithms) -> None:
         """
         Create class from point, dem and  visibility indices algorithms..
         """
@@ -152,11 +131,7 @@ class Viewshed:
         """
 
     @typing.overload
-    def calculate(
-        self,
-        arg0: typing.Callable[[str, float], None],
-        arg1: typing.Callable[[int, int], None],
-    ) -> None:
+    def calculate(self, arg0: typing.Callable[[str, float], None], arg1: typing.Callable[[int, int], None]) -> None:
         """
         Calculate with specified callbacks.
         """
