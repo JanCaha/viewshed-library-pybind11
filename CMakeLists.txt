@@ -15,16 +15,16 @@ find_package(Viewshed REQUIRED)
 include_directories(
     SimpleRasters::simplerasters
     Viewshed::viewshed
-    src
-    pybind11/incude
+    cpp_module
+    pybind11/include
 )
 
 set(SOURCES
-    src/python_module.cpp
-    src/visibility_algorithms.h
-    src/visibility_algorithms.cpp
-    src/python_objects_utils.h
-    src/python_objects_utils.cpp
+    cpp_module/python_module.cpp
+    cpp_module/visibility_algorithms.h
+    cpp_module/visibility_algorithms.cpp
+    cpp_module/python_objects_utils.h
+    cpp_module/python_objects_utils.cpp
 )
 
 # Find the pybind11 package
