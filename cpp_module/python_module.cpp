@@ -89,8 +89,7 @@ PYBIND11_MODULE( _viewshed, m )
                         { return std::make_shared<Viewshed>( vp, dem, algs->get() ); } ),
               "Create class from point, dem and  visibility indices algorithms.." )
         .def(
-            "calculate",
-            []( const std::shared_ptr<Viewshed> v )
+            "calculate", []( const std::shared_ptr<Viewshed> v )
             { v->calculate( []( std::string text, double time ) {}, []( int i, int j ) {} ); },
             "Calculate without callbacks." )
         .def( "calculate", &Viewshed::calculate, "Calculate with specified callbacks." )
@@ -98,18 +97,14 @@ PYBIND11_MODULE( _viewshed, m )
             "saveResults", []( const std::shared_ptr<Viewshed> v, const std::string path ) { v->saveResults( path ); },
             "Store results at specified path." )
         .def(
-            "saveResults",
-            []( const std::shared_ptr<Viewshed> v, const py::object path )
-            { v->saveResults( get_absolute_path( path, "path" ) ); },
-            "Store results at specified pathlib.Path." )
+            "saveResults", []( const std::shared_ptr<Viewshed> v, const py::object path )
+            { v->saveResults( get_absolute_path( path, "path" ) ); }, "Store results at specified pathlib.Path." )
         .def( "setMaxThreads", &Viewshed::setMaxThreads, "Set maximum number of threads to use." )
         .def( "setVisibilityMask", &Viewshed::setVisibilityMask, "Specifiy visibility mask to use during calculation." )
         .def( "calculateVisibilityMask", &Viewshed::calculateVisibilityMask, "Calculate visibility mask" )
         .def(
-            "saveVisibilityRaster",
-            []( const std::shared_ptr<Viewshed> v, const py::object path )
-            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
-            "Save visibility raster" )
+            "saveVisibilityRaster", []( const std::shared_ptr<Viewshed> v, const py::object path )
+            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); }, "Save visibility raster" )
         .def( "calculationTime", &Viewshed::parseLastedSeconds, "Seconds that processing of last operation lasted." );
 
     // inverseviewshed
@@ -121,29 +116,23 @@ PYBIND11_MODULE( _viewshed, m )
                       { return std::make_shared<InverseViewshed>( tp, offset, dem, algs->get() ); } ),
             "Create class from target point, observer's offset, dem and visibility indices algorithms." )
         .def(
-            "calculate",
-            []( const std::shared_ptr<InverseViewshed> v )
+            "calculate", []( const std::shared_ptr<InverseViewshed> v )
             { v->calculate( []( std::string text, double time ) {}, []( int i, int j ) {} ); },
             "Calculate without callbacks." )
         .def( "calculate", &InverseViewshed::calculate, "Calculate with specified callbacks." )
         .def(
-            "saveResults",
-            []( const std::shared_ptr<InverseViewshed> v, const std::string path ) { v->saveResults( path ); },
-            "Store results at specified path." )
+            "saveResults", []( const std::shared_ptr<InverseViewshed> v, const std::string path )
+            { v->saveResults( path ); }, "Store results at specified path." )
         .def(
-            "saveResults",
-            []( const std::shared_ptr<InverseViewshed> v, const py::object path )
-            { v->saveResults( get_absolute_path( path, "path" ) ); },
-            "Store results at specified pathlib.Path." )
+            "saveResults", []( const std::shared_ptr<InverseViewshed> v, const py::object path )
+            { v->saveResults( get_absolute_path( path, "path" ) ); }, "Store results at specified pathlib.Path." )
         .def( "setMaxThreads", &InverseViewshed::setMaxThreads, "Set maximum number of threads to use." )
         .def( "setVisibilityMask", &InverseViewshed::setVisibilityMask,
               "Specifiy visibility mask to use during calculation." )
         .def( "calculateVisibilityMask", &InverseViewshed::calculateVisibilityMask, "Calculate visibility mask" )
         .def(
-            "saveVisibilityRaster",
-            []( const std::shared_ptr<InverseViewshed> v, const py::object path )
-            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); },
-            "Save visibility raster" )
+            "saveVisibilityRaster", []( const std::shared_ptr<InverseViewshed> v, const py::object path )
+            { v->saveVisibilityRaster( get_absolute_path( path, "path" ) ); }, "Save visibility raster" )
         .def( "calculationTime", &InverseViewshed::parseLastedSeconds,
               "Seconds that processing of last operation lasted." );
     ;
