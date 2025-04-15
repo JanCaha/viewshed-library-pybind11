@@ -8,8 +8,8 @@ find_path(viewshed_INCLUDE_DIR
     NAMES viewshedlibrary.h
     PATHS
     /usr/include
-    /usr/include/viewshed
-    /usr/local/include/viewshed
+    /usr/local/include
+    PATH_SUFFIXES viewshed
     "${CMAKE_PREFIX_PATH}/include"
     ${viewshed_PKGCONF_INCLUDE_DIRS}
 )
