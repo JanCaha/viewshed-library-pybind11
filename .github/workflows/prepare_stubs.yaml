@@ -43,7 +43,7 @@ jobs:
       
       - name: Install python dependencies
         run: |
-          pip install pybind11-stubgen black --break-system-packages
+          pip install pybind11 pybind11-stubgen black --break-system-packages
 
       - uses: actions/checkout@v4
         with:

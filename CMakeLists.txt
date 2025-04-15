@@ -47,6 +47,8 @@ option(WITH_PY_STUBS
     "Generate Python stub files (.pyi) for the Python module." OFF)
 
 if(WITH_PY_STUBS)
+    message(STATUS "Generating Python stub files for the Python module and formatting them with black.")
+
     set(PYTHON_PACKAGE_SOURCE_DIR ${CMAKE_SOURCE_DIR}"/src/viewshed")
 
     add_custom_command(
