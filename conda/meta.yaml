@@ -14,22 +14,21 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-  host:
-    - python
-    - pip
-    - scikit-build-core
-    - setuptools
-    - pybind11
-    - pybind11-stubgen
     - cmake
     - ninja 
+    - scikit-build-core
+    - setuptools
+    - pip
+    - python
+  host:
+    - pybind11
+    - pybind11-stubgen
     - libgdal
     - libsimplerasters
     - libviewshed
   run:
     - python
     - libviewshed
-    - libgdal
     - libsimplerasters
     
 about:
