@@ -23,6 +23,7 @@ requirements:
     - pybind11
     - pybind11-stubgen
   host:
+    - python
     - libviewshed
   run:
     - python
