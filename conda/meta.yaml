@@ -14,23 +14,19 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-  host:
+    - cmake
+    - ninja 
     - python
     - pip
     - scikit-build-core
     - setuptools
     - pybind11
     - pybind11-stubgen
-    - cmake
-    - ninja 
-    - libgdal
-    - libsimplerasters
+  host:
     - libviewshed
   run:
     - python
     - libviewshed
-    - libgdal
-    - libsimplerasters
     
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
