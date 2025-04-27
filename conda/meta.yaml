@@ -7,7 +7,7 @@ source:
 
 build:
   noarch: false
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script: pip install . --no-deps -vv
 
 
 requirements:
