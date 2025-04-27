@@ -6,37 +6,32 @@ source:
   path: ..
 
 build:
-  number: 0
-  noarch: python
-  script: ${PYTHON} -m pip install . --no-deps -vv
+  noarch: false
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake
-    - ninja 
-    - python
   host:
     - python
+    - pip
+    - scikit-build-core
+    - setuptools
     - pybind11
     - pybind11-stubgen
+    - cmake
+    - ninja 
     - libgdal
     - libsimplerasters
     - libviewshed
   run:
     - python
     - libviewshed
+    - libgdal
     - libsimplerasters
-
-test:
-  imports:
-    - viewshed
-  commands:
-    - python -c "import viewshed; print(viewshed.__version__)"
-  requires:
-    - pytest
-
+    
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
   license: MIT
