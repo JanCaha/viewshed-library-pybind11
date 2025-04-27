@@ -15,10 +15,6 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja 
-    - scikit-build-core
-    - setuptools
-    - pip
-    - python
   host:
     - python
     - pybind11
