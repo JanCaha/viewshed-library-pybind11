@@ -17,13 +17,13 @@ requirements:
     - cmake
     - ninja 
     - python
+  host:
+    - python
     - pip
     - scikit-build-core
     - setuptools
     - pybind11
     - pybind11-stubgen
-  host:
-    - python
     - libviewshed
   run:
     - python
