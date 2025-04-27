@@ -30,7 +30,15 @@ requirements:
     - python
     - libviewshed
     - libsimplerasters
-    
+
+test:
+  imports:
+    - viewshed
+  commands:
+    - python -c "import viewshed; print(viewshed.__version__)"
+  requires:
+    - pytest
+
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
   license: MIT
