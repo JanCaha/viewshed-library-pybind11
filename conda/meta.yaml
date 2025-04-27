@@ -16,6 +16,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja 
+    - python
   host:
     - python
     - pybind11
