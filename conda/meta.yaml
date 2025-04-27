@@ -20,6 +20,7 @@ requirements:
     - pip
     - python
   host:
+    - python
     - pybind11
     - pybind11-stubgen
     - libgdal
