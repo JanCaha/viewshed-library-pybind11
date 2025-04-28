@@ -25,9 +25,13 @@ requirements:
     - pybind11
     - pybind11-stubgen
     - libviewshed
+    - libsimplerasters
+    - libgdal
   run:
     - python
     - libviewshed
+    - libsimplerasters
+    - libgdal
 
 test:
   imports:
