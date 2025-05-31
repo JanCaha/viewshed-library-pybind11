@@ -4,37 +4,6 @@ on: push
 
 jobs:
 
-  Update-conda-package-version:
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-      
-      - name: Set Env variable with project version
-        run: |
-            python_package_version=$(grep '^version = ' pyproject.toml | sed -E 's/version = "([0-9]+\.[0-9]+\.[0-9]+)"/\1/')
-            echo "PROJECT_VERSION=$python_package_version" >> $GITHUB_ENV
-      
-      - name: Print project version
-        run: |
-            echo "Project version: $PROJECT_VERSION"
-            
-      - name: Set project version
-        run: |
-            sed -i '/^project(/s/[0-9]\+\.[0-9]\+\.[0-9]\+/'$PROJECT_VERSION'/' CMakeLists.txt
-
-      - name: Update conda package version
-        run: |
-          sed -i '/version: /c\  version: \"'$PROJECT_VERSION'\"' conda/meta.yaml
-      
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-            commit_message: Change to conda package version
-            file_pattern: 'conda/meta.yaml'
-
   Build-on-Linux:
 
     name: Build on Linux
