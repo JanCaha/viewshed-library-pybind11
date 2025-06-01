@@ -9,7 +9,6 @@ on:
     paths:
       - src/**
       - cpp_module/**
-      - tests/**
       - pyproject.toml
       - CMakeLists.txt
       - .github/workflows/prepare_stubs.yaml
