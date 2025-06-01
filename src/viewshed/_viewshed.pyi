@@ -204,5 +204,5 @@ class VisibilityAlgorithms:
 
     def size(self) -> int: ...
 
-__version__: str = "4.1.0"
-version: str = "4.1.0"
+__version__: str = "4.1.2"
+version: str = "4.1.2"
