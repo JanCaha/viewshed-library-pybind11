@@ -47,7 +47,7 @@ jobs:
         with:
           repository: "JanCaha/cpp-viewshed-library"
           latest: true
-          fileName: "viewshed-without-qt*.deb"
+          fileName: "viewshed-no-qt*.deb"
           tarBall: false
           zipBall: false
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Install and remove artifact
         run: |
-          sudo apt install ./viewshed-without-qt*.deb
+          sudo apt install ./viewshed-no-qt*.deb
           rm viewshed*
       
       - name: Install python dependencies
