@@ -17,9 +17,9 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja 
-    - python
+    - python {{ python }}
   host:
-    - python
+    - python {{ python }}
     - pip
     - scikit-build-core
     - setuptools
@@ -29,7 +29,7 @@ requirements:
     - libsimplerasters
     - libgdal
   run:
-    - python
+    - python {{ python }}
     - libviewshed
     - libsimplerasters
     - libgdal
