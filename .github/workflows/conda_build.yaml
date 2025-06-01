@@ -6,6 +6,9 @@ concurrency:
 
 on: push
 
+env:
+  python-version: 3.12
+
 jobs:
 
   Build-on-Linux:
@@ -47,7 +50,7 @@ jobs:
 
       - name: Install conda-build
         run: |
-          conda install -n base conda-build conda-verify python=3.12
+          conda install -n base conda-build conda-verify python={{ env.python-version }}
 
       - name: Build library
         run: |
@@ -94,7 +97,7 @@ jobs:
 
       - name: Install conda-build
         run: |
-          conda install -n base conda-build conda-verify python=3.12
+          conda install -n base conda-build conda-verify python={{ env.python-version }}
 
       - name: Build library
         run: |
