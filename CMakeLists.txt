@@ -13,8 +13,6 @@ find_package(SimpleRasters REQUIRED)
 find_package(Viewshed REQUIRED)
 
 include_directories(
-    SimpleRasters::simplerasters
-    Viewshed::viewshed
     cpp_module
     pybind11/include
 )
@@ -36,8 +34,8 @@ pybind11_add_module(_viewshed ${SOURCES})
 target_include_directories(_viewshed PRIVATE ${CMAKE_SOURCE_DIR})
 
 target_link_libraries(_viewshed PRIVATE
-    SimpleRasters::SimpleRasters
-    Viewshed::viewshed
+    SimpleRasters::simplerasters_shared
+    Viewshed::viewshed_shared
     GDAL::GDAL
 )
 
