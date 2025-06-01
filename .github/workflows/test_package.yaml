@@ -43,11 +43,31 @@ jobs:
         run: |
           sudo apt-get install pybind11-dev python3-pybind11
 
-      - name: Install requirements
+      - uses: robinraju/release-downloader@v1
+        with:
+          repository: "JanCaha/cpp-simplerasters"
+          latest: true
+          fileName: "*.deb"
+          tarBall: false
+          zipBall: false
+        
+      - uses: robinraju/release-downloader@v1
+        with:
+          repository: "JanCaha/cpp-viewshed-library"
+          latest: true
+          fileName: "viewshed-no-qt*.deb"
+          tarBall: false
+          zipBall: false
+
+      - name: Install and remove artifact
         run: |
-          sudo add-apt-repository ppa:jancaha/gis-tools
-          sudo apt-get update
-          sudo apt-get install viewshed-bin
+          sudo apt install ./simplerasters*.deb
+          rm simplerasters*
+
+      - name: Install and remove artifact
+        run: |
+          sudo apt install ./viewshed-no-qt*.deb
+          rm viewshed*
       
       - uses: actions/checkout@v4
         with:
