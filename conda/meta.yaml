@@ -4,39 +4,39 @@ package:
 
 source:
   path: ..
+build:
+  noarch: false
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
-outputs:
-  - name: viewshed
-    noarch: false
-    number: 0
-    script: "{{ PYTHON }} -m pip install . --no-deps -vv"
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - cmake
-        - ninja
-        - python {{ python }}
-      host:
-        - python {{ python }}
-        - pip
-        - scikit-build-core
-        - setuptools
-        - pybind11
-        - pybind11-stubgen
-        - libviewshed
-        - libsimplerasters
-        - libgdal
-      run:
-        - python {{ python }}
-        - libviewshed
-        - libsimplerasters
-        - libgdal
-    test:
-      imports:
-        - viewshed
-      commands:
-        - python -c "import viewshed; print(viewshed.__version__)" 
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+    - ninja 
+    - python {{ python }}
+  host:
+    - python {{ python }}
+    - pip
+    - scikit-build-core
+    - setuptools
+    - pybind11
+    - pybind11-stubgen
+    - libviewshed
+    - libsimplerasters
+    - libgdal
+  run:
+    - python {{ python }}
+    - libviewshed
+    - libsimplerasters
+    - libgdal
+
+test:
+  imports:
+    - viewshed
+  commands:
+    - python -c "import viewshed; print(viewshed.__version__)" 
 
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
