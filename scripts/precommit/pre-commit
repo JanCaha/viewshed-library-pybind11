@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "🔍 Running pre-commit checks..."
+
 .git/hooks/conda_version.sh
 .git/hooks/build_stubs.sh
 
