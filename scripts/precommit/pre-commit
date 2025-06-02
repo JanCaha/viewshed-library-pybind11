@@ -1,2 +1,7 @@
 #!/bin/bash
+set -e
+
 .git/hooks/conda_version.sh
+.git/hooks/build_stubs.sh
+
+echo "✅ Pre-commit checks passed. You can proceed with your commit."
