@@ -5,3 +5,4 @@ set -e
 .git/hooks/build_stubs.sh
 
 echo "✅ Pre-commit checks passed. You can proceed with your commit."
+echo "🚀 Ready to commit!"

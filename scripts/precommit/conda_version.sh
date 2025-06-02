@@ -37,6 +37,5 @@ if [[ "$CONDA_VERSION" != "$PYTHON_PACKAGE_VERSION" ]]; then
     exit 1
 fi
 
-print_success "All pre-commit checks passed! ✨"
+print_success "Version updated! ✨"
 
-echo "🚀 Ready to commit!"
