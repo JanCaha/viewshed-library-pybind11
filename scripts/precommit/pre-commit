@@ -3,6 +3,8 @@ set -e
 
 echo "🔍 Running pre-commit checks..."
 
+echo "📁 Staged files: $(git diff --cached --name-only)"
+
 .git/hooks/conda_version.sh
 .git/hooks/build_stubs.sh
 
