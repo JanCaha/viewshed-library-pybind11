@@ -25,5 +25,8 @@
         "editor.formatOnSave": false,
     },
     "git.verboseCommit": true,
-    "git.useEditorAsCommitInput": true
+    "git.useEditorAsCommitInput": true,
+    "git.commandsToLog": [
+        "commit"
+    ]
 }
