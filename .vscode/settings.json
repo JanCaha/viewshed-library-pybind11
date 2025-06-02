@@ -23,5 +23,7 @@
     ],
     "[yaml]": {
         "editor.formatOnSave": false,
-    }
+    },
+    "git.verboseCommit": true,
+    "git.useEditorAsCommitInput": true
 }
