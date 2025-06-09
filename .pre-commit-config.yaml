@@ -7,7 +7,7 @@ repos:
         name: 'Version update'
         language: script
         entry: './scripts/precommit/version_update.sh'
-        files: ^CMakeLists.txt
+        files: ^pyproject.toml
       
       - id: style-cpp
         name: 'Style C++ code'
