@@ -1,0 +1,22 @@
+repos:
+  - repo: local
+  
+    hooks:
+
+      - id: version-update
+        name: 'Version update'
+        language: script
+        entry: './scripts/precommit/version_update.sh'
+        files: ^CMakeLists.txt
+      
+      - id: style-cpp
+        name: 'Style C++ code'
+        language: script
+        entry: './scripts/precommit/clang_format.sh'
+        files: ^cpp_module/.*$
+
+      - id: build-stubs
+        name: 'Build Python Stubs'
+        language: script
+        entry: './scripts/precommit/build_stubs.sh'
+        files: ^cpp_module/.*$
