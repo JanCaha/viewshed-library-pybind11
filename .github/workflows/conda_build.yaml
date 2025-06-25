@@ -50,7 +50,7 @@ jobs:
 
       - name: Install conda-build
         run: |
-          conda install -n base conda-build conda-verify python={{ env.python-version }}
+          conda install -n base conda-build conda-verify python=${{ env.python-version }}
 
       - name: Build library
         run: |
@@ -97,7 +97,7 @@ jobs:
 
       - name: Install conda-build
         run: |
-          conda install -n base conda-build conda-verify python={{ env.python-version }}
+          conda install -n base conda-build conda-verify python=${{ env.python-version }}
 
       - name: Build library
         run: |
@@ -148,7 +148,7 @@ jobs:
 
       - name: Install conda-build
         run: |
-          conda install -n base conda-build conda-verify python={{ env.python-version }}
+          conda install -n base conda-build conda-verify python=${{ env.python-version }}
 
       - name: Build library
         run: |
