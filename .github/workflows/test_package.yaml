@@ -25,7 +25,11 @@ jobs:
     name: "Test package in Python ${{ matrix.python-version }}"
 
     runs-on: ubuntu-latest
-
+    
+    env:
+      CXX: clang++
+      CC: clang
+  
     steps:
 
       - uses: actions/setup-python@v5
