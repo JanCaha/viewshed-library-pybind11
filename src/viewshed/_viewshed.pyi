@@ -17,7 +17,13 @@ class InverseViewshed:
     Class for calculation of visibility of point.
     """
 
-    def __init__(self, target_point: Point, observer_offset: float, dem: ProjectedSquareCellRaster, algorithms: VisibilityAlgorithms) -> None:
+    def __init__(
+        self,
+        target_point: Point,
+        observer_offset: float,
+        dem: ProjectedSquareCellRaster,
+        algorithms: VisibilityAlgorithms,
+    ) -> None:
         """
         Create class from target point, observer's offset, dem and visibility indices algorithms.
         """
@@ -207,5 +213,10 @@ class VisibilityAlgorithms:
         Build only boolean visibility with provided NoData value.
         """
 
-    def size(self) -> int: ...
+    def size(self) -> int:
+        """
+        Number of algorithms stored in the class.
+        """
 
+__version__: str = "5.0.0"
+version: str = "5.0.0"
