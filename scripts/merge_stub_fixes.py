@@ -7,61 +7,79 @@ import re
 from pathlib import Path
 
 
-CLASS_RE = re.compile(r"^class\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*$")
-DEF_RE = re.compile(r"^(?P<indent>\s*)def\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*\(")
+CLASS_RE = re.compile(r"^class\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\b.*:\s*$")
+DEF_RE = re.compile(r"^(?P<indent>\s*)def\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\b")
 
 
 def _read_lines(path: Path) -> list[str]:
     return path.read_text(encoding="utf-8").splitlines(keepends=True)
 
 
-def _index_defs(lines: list[str]) -> dict[tuple[str, str, int], str]:
-    indexed: dict[tuple[str, str, int], str] = {}
+def _extract_def_block(lines: list[str], start: int) -> tuple[str, list[str], int]:
+    def_match = DEF_RE.match(lines[start])
+    if not def_match:
+        raise ValueError("Expected function definition at start index")
+
+    method_name = def_match.group("name")
+    base_indent = len(def_match.group("indent"))
+    end = start + 1
+
+    while end < len(lines):
+        line = lines[end]
+        stripped = line.strip()
+
+        if stripped == "":
+            end += 1
+            continue
+
+        if CLASS_RE.match(line):
+            break
+
+        next_def_match = DEF_RE.match(line)
+        if next_def_match and len(next_def_match.group("indent")) <= base_indent:
+            break
+
+        if line.lstrip().startswith("@") and (len(line) - len(line.lstrip())) <= base_indent:
+            break
+
+        end += 1
+
+    return method_name, lines[start:end], end
+
+
+def _index_defs(lines: list[str]) -> dict[tuple[str, str, int], list[str]]:
+    indexed: dict[tuple[str, str, int], list[str]] = {}
     counters: dict[tuple[str, str], int] = {}
     current_class = ""
 
-    for line in lines:
+    i = 0
+    while i < len(lines):
+        line = lines[i]
         class_match = CLASS_RE.match(line)
         if class_match:
             current_class = class_match.group("name")
+            i += 1
             continue
 
-        def_match = DEF_RE.match(line)
-        if not def_match:
+        if not DEF_RE.match(line):
+            i += 1
             continue
 
-        method_name = def_match.group("name")
+        method_name, def_block, next_index = _extract_def_block(lines, i)
         base_key = (current_class, method_name)
         index = counters.get(base_key, 0)
         counters[base_key] = index + 1
-        indexed[(current_class, method_name, index)] = line
+        indexed[(current_class, method_name, index)] = def_block
+        i = next_index
 
     return indexed
 
 
-def _extract_top_alias_block(lines: list[str]) -> list[str]:
-    all_idx = next((i for i, line in enumerate(lines) if line.startswith("__all__ = ")), None)
+def _extract_prefix_to_first_class(lines: list[str]) -> list[str]:
     first_class_idx = next((i for i, line in enumerate(lines) if line.startswith("class ")), None)
-
-    if all_idx is None or first_class_idx is None or first_class_idx <= all_idx + 1:
-        return []
-
-    start = all_idx + 1
-    while start < first_class_idx and lines[start].strip() == "":
-        start += 1
-
-    if start >= first_class_idx:
-        return []
-
-    end = first_class_idx
-    while end > start and lines[end - 1].strip() == "":
-        end -= 1
-
-    if end <= start:
-        return []
-
-    block = lines[start:end]
-    return block + ["\n"]
+    if first_class_idx is None:
+        return lines
+    return lines[:first_class_idx]
 
 
 def merge_stub(generated: Path, existing: Path, output: Path) -> None:
@@ -78,34 +96,36 @@ def merge_stub(generated: Path, existing: Path, output: Path) -> None:
     current_class = ""
     counters: dict[tuple[str, str], int] = {}
 
-    for line in generated_lines:
+    i = 0
+    while i < len(generated_lines):
+        line = generated_lines[i]
         class_match = CLASS_RE.match(line)
         if class_match:
             current_class = class_match.group("name")
             merged_lines.append(line)
+            i += 1
             continue
 
-        def_match = DEF_RE.match(line)
-        if not def_match:
+        if not DEF_RE.match(line):
             merged_lines.append(line)
+            i += 1
             continue
 
-        method_name = def_match.group("name")
+        method_name, generated_def_block, next_index = _extract_def_block(generated_lines, i)
         base_key = (current_class, method_name)
         index = counters.get(base_key, 0)
         counters[base_key] = index + 1
 
-        merged_lines.append(existing_defs.get((current_class, method_name, index), line))
+        merged_lines.extend(existing_defs.get((current_class, method_name, index), generated_def_block))
+        i = next_index
 
-    alias_block = _extract_top_alias_block(existing_lines)
-    if alias_block:
-        all_idx = next((i for i, line in enumerate(merged_lines) if line.startswith("__all__ = ")), None)
+    existing_prefix = _extract_prefix_to_first_class(existing_lines)
+    if existing_prefix:
         first_class_idx = next((i for i, line in enumerate(merged_lines) if line.startswith("class ")), None)
-        if all_idx is not None and first_class_idx is not None and first_class_idx > all_idx:
-            start = all_idx + 1
-            while start < first_class_idx and merged_lines[start].strip() == "":
-                start += 1
-            merged_lines = merged_lines[:start] + alias_block + merged_lines[first_class_idx:]
+        if first_class_idx is None:
+            merged_lines = existing_prefix
+        else:
+            merged_lines = existing_prefix + merged_lines[first_class_idx:]
 
     merged_text = "".join(merged_lines)
     merged_text = merged_text.replace("Specifiy", "Specify")
