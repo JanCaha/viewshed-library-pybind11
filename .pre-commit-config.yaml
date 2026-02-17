@@ -9,14 +9,14 @@ repos:
         entry: './scripts/precommit/version_update.sh'
         files: ^pyproject.toml
       
-      - id: style-cpp
-        name: 'Style C++ code'
-        language: script
-        entry: './scripts/precommit/clang_format.sh'
-        files: ^cpp_module/.*$
+      # - id: build-stubs
+      #   name: 'Build Python Stubs'
+      #   language: script
+      #   entry: './scripts/precommit/build_stubs.sh'
+      #   files: ^cpp_module/.*$
 
-      - id: build-stubs
-        name: 'Build Python Stubs'
-        language: script
-        entry: './scripts/precommit/build_stubs.sh'
-        files: ^cpp_module/.*$
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v20.1.0
+    hooks:
+      - id: clang-format
+        files: ^(src|tests)/.*\.(c|cc|cpp|h|hpp)$
