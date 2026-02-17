@@ -3,16 +3,21 @@ Python interface for viewshed library.
 """
 
 from __future__ import annotations
+from pathlib import Path
 import typing
 
 __all__ = ["InverseViewshed", "Point", "ProjectedSquareCellRaster", "Viewshed", "VisibilityAlgorithms", "version"]
+
+PathLike = typing.Union[str, Path]
+StepCallback = typing.Callable[[str, float], None]
+PercentCallback = typing.Callable[[int, int], None]
 
 class InverseViewshed:
     """
     Class for calculation of visibility of point.
     """
 
-    def __init__(self, arg0: Point, arg1: float, arg2: ProjectedSquareCellRaster, arg3: VisibilityAlgorithms) -> None:
+    def __init__(self, target_point: Point, observer_offset: float, dem: ProjectedSquareCellRaster, algorithms: VisibilityAlgorithms) -> None:
         """
         Create class from target point, observer's offset, dem and visibility indices algorithms.
         """
@@ -24,7 +29,7 @@ class InverseViewshed:
         """
 
     @typing.overload
-    def calculate(self, arg0: typing.Callable[[str, float], None], arg1: typing.Callable[[int, int], None]) -> None:
+    def calculate(self, stepCallback: StepCallback, percentCallback: PercentCallback) -> None:
         """
         Calculate with specified callbacks.
         """
@@ -40,30 +45,30 @@ class InverseViewshed:
         """
 
     @typing.overload
-    def saveResults(self, arg0: str) -> None:
+    def saveResults(self, path: str) -> None:
         """
         Store results at specified path.
         """
 
     @typing.overload
-    def saveResults(self, arg0: typing.Any) -> None:
+    def saveResults(self, path: PathLike) -> None:
         """
         Store results at specified pathlib.Path.
         """
 
-    def saveVisibilityRaster(self, arg0: typing.Any) -> None:
+    def saveVisibilityRaster(self, path: PathLike) -> None:
         """
         Save visibility raster
         """
 
-    def setMaxThreads(self, arg0: int) -> None:
+    def setMaxThreads(self, max_threads: int) -> None:
         """
         Set maximum number of threads to use.
         """
 
-    def setVisibilityMask(self, arg0: ProjectedSquareCellRaster) -> None:
+    def setVisibilityMask(self, visibility_mask: ProjectedSquareCellRaster) -> None:
         """
-        Specifiy visibility mask to use during calculation.
+        Specify visibility mask to use during calculation.
         """
 
 class Point:
@@ -71,7 +76,7 @@ class Point:
     Point representing either observer or target point.
     """
 
-    def __init__(self, arg0: float, arg1: float, arg2: ProjectedSquareCellRaster, arg3: float) -> None:
+    def __init__(self, x: float, y: float, dem: ProjectedSquareCellRaster, offset: float) -> None:
         """
         Construct using coordinates x,y, ProjectedSquareCellRaster and offset from surface.
         """
@@ -87,19 +92,19 @@ class ProjectedSquareCellRaster:
     """
 
     @typing.overload
-    def __init__(self, arg0: str, arg1: int) -> None:
+    def __init__(self, path: str, band: int) -> None:
         """
         Build from string path and  specified band.
         """
 
     @typing.overload
-    def __init__(self, arg0: str) -> None:
+    def __init__(self, path: str) -> None:
         """
         Build from string path.
         """
 
     @typing.overload
-    def __init__(self, arg0: typing.Any) -> None:
+    def __init__(self, path: PathLike) -> None:
         """
         Build from pathlib.Path.
         """
@@ -119,7 +124,7 @@ class Viewshed:
     Class for calculation of visibility from point.
     """
 
-    def __init__(self, arg0: Point, arg1: ProjectedSquareCellRaster, arg2: VisibilityAlgorithms) -> None:
+    def __init__(self, viewpoint: Point, dem: ProjectedSquareCellRaster, algorithms: VisibilityAlgorithms) -> None:
         """
         Create class from point, dem and  visibility indices algorithms..
         """
@@ -131,7 +136,7 @@ class Viewshed:
         """
 
     @typing.overload
-    def calculate(self, arg0: typing.Callable[[str, float], None], arg1: typing.Callable[[int, int], None]) -> None:
+    def calculate(self, stepCallback: StepCallback, percentCallback: PercentCallback) -> None:
         """
         Calculate with specified callbacks.
         """
@@ -147,30 +152,30 @@ class Viewshed:
         """
 
     @typing.overload
-    def saveResults(self, arg0: str) -> None:
+    def saveResults(self, path: str) -> None:
         """
         Store results at specified path.
         """
 
     @typing.overload
-    def saveResults(self, arg0: typing.Any) -> None:
+    def saveResults(self, path: PathLike) -> None:
         """
         Store results at specified pathlib.Path.
         """
 
-    def saveVisibilityRaster(self, arg0: typing.Any) -> None:
+    def saveVisibilityRaster(self, path: PathLike) -> None:
         """
         Save visibility raster
         """
 
-    def setMaxThreads(self, arg0: int) -> None:
+    def setMaxThreads(self, max_threads: int) -> None:
         """
         Set maximum number of threads to use.
         """
 
-    def setVisibilityMask(self, arg0: ProjectedSquareCellRaster) -> None:
+    def setVisibilityMask(self, visibility_mask: ProjectedSquareCellRaster) -> None:
         """
-        Specifiy visibility mask to use during calculation.
+        Specify visibility mask to use during calculation.
         """
 
 class VisibilityAlgorithms:
@@ -185,24 +190,22 @@ class VisibilityAlgorithms:
         """
 
     @typing.overload
-    def __init__(self, arg0: float) -> None:
+    def __init__(self, no_data: float) -> None:
         """
         Build all algorithms with provided NoData value.
         """
 
     @typing.overload
-    def __init__(self, arg0: bool) -> None:
+    def __init__(self, single_visibility_only: bool) -> None:
         """
         Build only boolean visibility with default NoData value.
         """
 
     @typing.overload
-    def __init__(self, arg0: bool, arg1: float) -> None:
+    def __init__(self, single_visibility_only: bool, no_data: float) -> None:
         """
         Build only boolean visibility with provided NoData value.
         """
 
     def size(self) -> int: ...
 
-__version__: str = "4.1.2"
-version: str = "4.1.2"
