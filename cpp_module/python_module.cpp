@@ -56,7 +56,7 @@ PYBIND11_MODULE( _viewshed, m )
                       return algs;
                   } ),
               "Build only boolean visibility with provided NoData value." )
-        .def( "size", &VisibilityAlgs::size );
+        .def( "size", &VisibilityAlgs::size, "Number of algorithms stored in the class." );
 
     // input raster
     py::class_<ProjectedSquareCellRaster, std::shared_ptr<ProjectedSquareCellRaster>>(
