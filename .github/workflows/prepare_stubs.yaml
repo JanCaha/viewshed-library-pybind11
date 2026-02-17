@@ -74,7 +74,7 @@ jobs:
 
       - name: Build
         run: |
-          cmake --workflow --preset workflow-release-stubs
+          cmake --workflow --preset workflow-release
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
