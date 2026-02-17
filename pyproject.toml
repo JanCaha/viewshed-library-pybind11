@@ -13,12 +13,16 @@ build-backend = "scikit_build_core.build"
 where = ["src"]
 include = ["viewshed"]
 
-sdist.include = ["src/viewshed//*.pyi", "src/viewshed/py.typed"]
+[tool.setuptools.package-data]
+viewshed = ["*.pyi", "py.typed"]
+
+[tool.scikit-build]
+sdist.include = ["src/viewshed/*.pyi", "src/viewshed/py.typed"]
 
 [project]
 name = "viewshed"
 readme = "README.md"
-version = "0.7.6"
+version = "0.8.0"
 description = "Python package to make using viewshed library easier, directly from Python."
 requires-python = ">=3.8"
 license = { "file" = "LICENSE" }

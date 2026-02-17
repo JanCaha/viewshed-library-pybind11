@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.20)
-project(viewshed_pybind VERSION 0.7.6)
+cmake_minimum_required(VERSION 3.24)
+project(viewshed_pybind VERSION 0.8.0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
@@ -48,11 +48,19 @@ if(WITH_PY_STUBS)
     message(STATUS "Generating Python stub files for the Python module and formatting them with black.")
 
     set(PYTHON_PACKAGE_SOURCE_DIR ${CMAKE_SOURCE_DIR}"/src/viewshed")
+    set(PYTHON_STUB_FILENAME "_viewshed.pyi")
+    set(PYTHON_STUB_PATH ${PYTHON_PACKAGE_SOURCE_DIR}"/"${PYTHON_STUB_FILENAME})
+    set(PYTHON_STUB_TEMP_DIR ${CMAKE_BINARY_DIR}"/stubgen")
+    set(PYTHON_STUB_TEMP_PACKAGE_DIR ${PYTHON_STUB_TEMP_DIR}"/viewshed")
+    set(PYTHON_STUB_TEMP_PATH ${PYTHON_STUB_TEMP_PACKAGE_DIR}"/"${PYTHON_STUB_FILENAME})
+    set(PYTHON_STUB_MERGE_SCRIPT ${CMAKE_SOURCE_DIR}"/scripts/merge_stub_fixes.py")
 
     add_custom_command(
         TARGET _viewshed
         POST_BUILD
-        COMMAND ${Python3_EXECUTABLE} "-m" "pybind11_stubgen" _viewshed "--output" ${PYTHON_PACKAGE_SOURCE_DIR}
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${PYTHON_STUB_TEMP_DIR}
+        COMMAND ${Python3_EXECUTABLE} "-m" "pybind11_stubgen" _viewshed "--output" ${PYTHON_STUB_TEMP_DIR}
+        COMMAND ${Python3_EXECUTABLE} ${PYTHON_STUB_MERGE_SCRIPT} "--generated" ${PYTHON_STUB_TEMP_PATH} "--existing" ${PYTHON_STUB_PATH} "--output" ${PYTHON_STUB_PATH}
         COMMAND black ${PYTHON_PACKAGE_SOURCE_DIR} "--line-length" "120"
         COMMENT "Copying shared library to python package directory"
     )
