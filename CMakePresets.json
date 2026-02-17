@@ -1,0 +1,93 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 24,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "configure-release",
+            "displayName": "Configure Release",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "WITH_PY_STUBS": "OFF"
+            }
+        },
+        {
+            "name": "configure-release-stubs",
+            "displayName": "Configure Release (with Python stubs)",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "WITH_PY_STUBS": "ON"
+            }
+        },
+        {
+            "name": "configure-debug",
+            "displayName": "Configure Debug",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "WITH_PY_STUBS": "OFF"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-release",
+            "displayName": "Build Release",
+            "configurePreset": "configure-release"
+        },
+        {
+            "name": "build-release-stubs",
+            "displayName": "Build Release (with Python stubs)",
+            "configurePreset": "configure-release-stubs"
+        },
+        {
+            "name": "build-debug",
+            "displayName": "Build Debug",
+            "configurePreset": "configure-debug"
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "workflow-release",
+            "displayName": "Configure + Build (Release + stubs)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "configure-release-stubs"
+                },
+                {
+                    "type": "build",
+                    "name": "build-release-stubs"
+                }
+            ]
+        },
+        {
+            "name": "workflow-debug",
+            "displayName": "Configure + Build (Debug)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "configure-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "build-debug"
+                }
+            ]
+        }
+    ]
+}
