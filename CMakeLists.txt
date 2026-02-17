@@ -59,7 +59,7 @@ if(WITH_PY_STUBS)
         TARGET _viewshed
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory ${PYTHON_STUB_TEMP_DIR}
-        COMMAND ${Python3_EXECUTABLE} "-m" "pybind11_stubgen" _viewshed "--output" ${PYTHON_STUB_TEMP_DIR}
+        COMMAND ${Python3_EXECUTABLE} "-m" "pybind11_stubgen" _viewshed "--output" ${PYTHON_STUB_TEMP_PACKAGE_DIR}
         COMMAND ${Python3_EXECUTABLE} ${PYTHON_STUB_MERGE_SCRIPT} "--generated" ${PYTHON_STUB_TEMP_PATH} "--existing" ${PYTHON_STUB_PATH} "--output" ${PYTHON_STUB_PATH}
         COMMAND black ${PYTHON_PACKAGE_SOURCE_DIR} "--line-length" "120"
         COMMENT "Copying shared library to python package directory"
