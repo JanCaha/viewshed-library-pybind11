@@ -36,8 +36,11 @@ requirements:
 test:
   imports:
     - viewshed
+  requires:
+    - pytest
   commands:
-    - python -c "import viewshed; print(viewshed.__version__)" 
+    - python -c "import viewshed; print(viewshed.__version__)"
+    - pytest {{ SRC_DIR }}/tests -v
 
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
