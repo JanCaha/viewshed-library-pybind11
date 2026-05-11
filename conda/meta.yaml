@@ -34,13 +34,15 @@ requirements:
     - libgdal
 
 test:
+  source_files:
+    - tests
   imports:
     - viewshed
   requires:
     - pytest
   commands:
     - python -c "import viewshed; print(viewshed.__version__)"
-    - pytest {{ SRC_DIR }}/tests -v
+    - pytest tests -v
 
 about:
   home: https://github.com/JanCaha/viewshed-library-pybind11
