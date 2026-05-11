@@ -89,10 +89,31 @@ PYBIND11_MODULE( _viewshed, m )
                         { return std::make_shared<Viewshed>( vp, dem, algs->get() ); } ),
               "Create class from point, dem and  visibility indices algorithms.." )
         .def(
-            "calculate", []( const std::shared_ptr<Viewshed> v )
-            { v->calculate( []( std::string text, double time ) {}, []( int i, int j ) {} ); },
+            "calculate",
+            []( const std::shared_ptr<Viewshed> v )
+            {
+                py::gil_scoped_release release;
+                v->calculate( []( std::string, double ) {}, []( int, int ) {} );
+            },
             "Calculate without callbacks." )
-        .def( "calculate", &Viewshed::calculate, "Calculate with specified callbacks." )
+        .def(
+            "calculate",
+            []( const std::shared_ptr<Viewshed> v, py::function timingCb, py::function progressCb )
+            {
+                auto timingWrapper = [timingCb]( std::string text, double time )
+                {
+                    py::gil_scoped_acquire gil;
+                    timingCb( text, time );
+                };
+                auto progressWrapper = [progressCb]( int size, int current )
+                {
+                    py::gil_scoped_acquire gil;
+                    progressCb( size, current );
+                };
+                py::gil_scoped_release release;
+                v->calculate( timingWrapper, progressWrapper );
+            },
+            "Calculate with specified callbacks." )
         .def(
             "saveResults", []( const std::shared_ptr<Viewshed> v, const std::string path ) { v->saveResults( path ); },
             "Store results at specified path." )
@@ -116,10 +137,31 @@ PYBIND11_MODULE( _viewshed, m )
                       { return std::make_shared<InverseViewshed>( tp, offset, dem, algs->get() ); } ),
             "Create class from target point, observer's offset, dem and visibility indices algorithms." )
         .def(
-            "calculate", []( const std::shared_ptr<InverseViewshed> v )
-            { v->calculate( []( std::string text, double time ) {}, []( int i, int j ) {} ); },
+            "calculate",
+            []( const std::shared_ptr<InverseViewshed> v )
+            {
+                py::gil_scoped_release release;
+                v->calculate( []( std::string, double ) {}, []( int, int ) {} );
+            },
             "Calculate without callbacks." )
-        .def( "calculate", &InverseViewshed::calculate, "Calculate with specified callbacks." )
+        .def(
+            "calculate",
+            []( const std::shared_ptr<InverseViewshed> v, py::function timingCb, py::function progressCb )
+            {
+                auto timingWrapper = [timingCb]( std::string text, double time )
+                {
+                    py::gil_scoped_acquire gil;
+                    timingCb( text, time );
+                };
+                auto progressWrapper = [progressCb]( int size, int current )
+                {
+                    py::gil_scoped_acquire gil;
+                    progressCb( size, current );
+                };
+                py::gil_scoped_release release;
+                v->calculate( timingWrapper, progressWrapper );
+            },
+            "Calculate with specified callbacks." )
         .def(
             "saveResults", []( const std::shared_ptr<InverseViewshed> v, const std::string path )
             { v->saveResults( path ); }, "Store results at specified path." )
