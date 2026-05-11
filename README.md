@@ -4,22 +4,12 @@ Minimalistic python interface for C++ library [viewshed](https://github.com/JanC
 
 ## Install
 
-If you have `viewshed` library installed, preferably from [PPA](https://launchpad.net/~jancaha/+archive/ubuntu/gis-tools), the installation should be straight forward:
+### conda
+
+The easiest way to install is via conda from the [custom channel](https://jancaha.github.io/conda-channel):
 
 ```bash
-pip install git+https://github.com/JanCaha/viewshed-library-pybind11
-```
-
-The `cmake` and `git` need to be installed for the compilation to work.
-
-## Docker
-
-Docker build is handled from viewshed library repository [here](https://github.com/JanCaha/cpp-viewshed-library).
- 
-There is also docker container with the Python bindings ready, which can be obtained using:
-
-```bash
-docker pull cahik/viewshed:latest-python
+conda install -c https://jancaha.github.io/conda-channel -c conda-forge viewshed
 ```
 
 ## Running from Python
