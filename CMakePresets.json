@@ -63,7 +63,21 @@
     "workflowPresets": [
         {
             "name": "workflow-release",
-            "displayName": "Configure + Build (Release + stubs)",
+            "displayName": "Configure + Build (Release)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "configure-release"
+                },
+                {
+                    "type": "build",
+                    "name": "build-release"
+                }
+            ]
+        },
+        {
+            "name": "workflow-release-stubs",
+            "displayName": "Configure + Build (Release with Python stubs)",
             "steps": [
                 {
                     "type": "configure",
