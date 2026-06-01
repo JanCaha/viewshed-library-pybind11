@@ -29,5 +29,5 @@ def test_inverse_viewshed(
     file_messages_percent.seek(0)
     file_messages_timing.seek(0)
 
-    assert len(file_messages_percent.readlines()) == 189945
+    assert len(file_messages_percent.readlines()) == 100
     assert len(file_messages_timing.readlines()) == 3

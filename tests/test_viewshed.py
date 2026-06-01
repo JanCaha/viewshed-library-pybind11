@@ -28,7 +28,7 @@ def test_viewshed(
     file_messages_percent.seek(0)
     file_messages_timing.seek(0)
 
-    assert len(file_messages_percent.readlines()) == 113967
+    assert len(file_messages_percent.readlines()) == 100
     assert len(file_messages_timing.readlines()) == 3
 
 
@@ -60,7 +60,7 @@ def test_viewshed_mask(
     file_messages_percent.seek(0)
     file_messages_timing.seek(0)
 
-    assert len(file_messages_percent.readlines()) == 84419
+    assert len(file_messages_percent.readlines()) == 100
     assert len(file_messages_timing.readlines()) == 3
 
 def test_viewshed_visibility_raster(
