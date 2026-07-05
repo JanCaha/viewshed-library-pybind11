@@ -32,8 +32,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
       
       - name: Setup conda
         uses: conda-incubator/setup-miniconda@v4
@@ -79,8 +77,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Setup conda
         uses: conda-incubator/setup-miniconda@v4
@@ -130,8 +126,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          submodules: true
       
       - name: Setup conda
         uses: conda-incubator/setup-miniconda@v4

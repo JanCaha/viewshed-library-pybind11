@@ -69,8 +69,6 @@ jobs:
           pip install pybind11 pybind11-stubgen black --break-system-packages
 
       - uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Build
         run: |

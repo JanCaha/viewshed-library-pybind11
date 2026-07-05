@@ -71,8 +71,6 @@ jobs:
           rm viewshed*
 
       - uses: actions/checkout@v7
-        with:
-          submodules: true
 
       - name: Install pip packages
         run: |
