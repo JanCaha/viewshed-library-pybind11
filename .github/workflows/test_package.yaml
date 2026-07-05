@@ -29,7 +29,7 @@ jobs:
       CC: clang
 
     steps:
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "${{ matrix.python-version }}"
           architecture: "x64"
@@ -70,7 +70,7 @@ jobs:
           sudo apt install ./viewshed-no-qt*.deb
           rm viewshed*
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -92,7 +92,7 @@ jobs:
           cd dist
           ls -l
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: viewshed-${{ matrix.python-version }}
           path: dist/viewshed*.whl

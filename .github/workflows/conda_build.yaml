@@ -31,12 +31,12 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       
       - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           auto-update-conda: true
           use-mamba: true
@@ -57,7 +57,7 @@ jobs:
           conda build conda --output-folder conda_package --variant-config-files conda/variants/unix.yaml
       
       - name: Upload artifact   
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: conda_package/linux-64/*.conda 
           name: conda_package_linux
@@ -78,12 +78,12 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
 
       - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           auto-update-conda: true
           use-mamba: true
@@ -104,7 +104,7 @@ jobs:
           conda build conda --output-folder conda_package --variant-config-files conda/variants/windows.yaml
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: conda_package/win-64/*.conda
           name: conda_package_windows
@@ -129,12 +129,12 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       
       - name: Setup conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           auto-update-conda: true
           use-mamba: true
@@ -155,7 +155,7 @@ jobs:
           conda build conda --output-folder conda_package --variant-config-files conda/variants/unix.yaml
       
       - name: Upload artifact   
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: conda_package/osx-arm64/*.conda 
           name: conda_package_macos

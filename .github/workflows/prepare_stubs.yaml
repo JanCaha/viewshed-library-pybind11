@@ -23,7 +23,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           architecture: "x64"
@@ -68,7 +68,7 @@ jobs:
         run: |
           pip install pybind11 pybind11-stubgen black --break-system-packages
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -76,7 +76,7 @@ jobs:
         run: |
           cmake --workflow --preset workflow-release-stubs
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Changes to stubs
           file_pattern: "src/viewshed/*.pyi"
