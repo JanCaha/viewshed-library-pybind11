@@ -65,6 +65,7 @@ jobs:
         with:
           repository: JanCaha/cpp-viewshed-library
           path: deps/cpp-viewshed-library
+          submodules: true
 
       - name: Build and install cpp-viewshed-library (no GUI, no Qt)
         run: |
