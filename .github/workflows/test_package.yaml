@@ -44,33 +44,43 @@ jobs:
         run: |
           sudo apt-get install pybind11-dev python3-pybind11
 
-      - uses: robinraju/release-downloader@v1
-        with:
-          repository: "JanCaha/cpp-simplerasters"
-          latest: true
-          fileName: "*.deb"
-          tarBall: false
-          zipBall: false
-
-      - uses: robinraju/release-downloader@v1
-        with:
-          repository: "JanCaha/cpp-viewshed-library"
-          latest: true
-          fileName: "viewshed-no-qt*.deb"
-          tarBall: false
-          zipBall: false
-
-      - name: Install and remove artifact
-        run: |
-          sudo apt install ./simplerasters*.deb
-          rm simplerasters*
-
-      - name: Install and remove artifact
-        run: |
-          sudo apt install ./viewshed-no-qt*.deb
-          rm viewshed*
-
       - uses: actions/checkout@v7
+
+      - name: Checkout cpp-simplerasters
+        uses: actions/checkout@v7
+        with:
+          repository: JanCaha/cpp-simplerasters
+          path: deps/cpp-simplerasters
+
+      - name: Build and install cpp-simplerasters
+        run: |
+          cmake -S deps/cpp-simplerasters -B deps/cpp-simplerasters/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_TESTS=OFF
+          cmake --build deps/cpp-simplerasters/build --parallel
+          sudo cmake --install deps/cpp-simplerasters/build
+
+      - name: Checkout cpp-viewshed-library
+        uses: actions/checkout@v7
+        with:
+          repository: JanCaha/cpp-viewshed-library
+          path: deps/cpp-viewshed-library
+
+      - name: Build and install cpp-viewshed-library (no GUI, no Qt)
+        run: |
+          cmake -S deps/cpp-viewshed-library -B deps/cpp-viewshed-library/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DNEEDS_QT=OFF \
+            -DBUILD_GUI_APP=OFF \
+            -DBUILD_TESTS=OFF \
+            -DBUILD_DOCUMENTATION=OFF
+          cmake --build deps/cpp-viewshed-library/build --parallel
+          sudo cmake --install deps/cpp-viewshed-library/build
+
+      - name: Refresh linker cache and remove library sources
+        run: |
+          sudo ldconfig
+          rm -rf deps
 
       - name: Install pip packages
         run: |
