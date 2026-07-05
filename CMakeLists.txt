@@ -12,11 +12,6 @@ find_package(GDAL REQUIRED)
 find_package(SimpleRasters REQUIRED)
 find_package(Viewshed REQUIRED)
 
-include_directories(
-    cpp_module
-    pybind11/include
-)
-
 set(SOURCES
     cpp_module/python_module.cpp
     cpp_module/visibility_algorithms.h
@@ -31,7 +26,7 @@ find_pybind11_python_first()
 
 pybind11_add_module(_viewshed ${SOURCES})
 
-target_include_directories(_viewshed PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(_viewshed PRIVATE ${CMAKE_SOURCE_DIR}/cpp_module)
 
 target_link_libraries(_viewshed PRIVATE
     SimpleRasters::simplerasters_shared
