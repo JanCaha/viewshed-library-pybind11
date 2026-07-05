@@ -1,0 +1,10 @@
+name: viewshed-test
+
+channels:
+  - https://jancaha.github.io/conda-channel
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.14
+  - viewshed
