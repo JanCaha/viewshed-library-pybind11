@@ -18,6 +18,9 @@ viewshed = ["*.pyi", "py.typed"]
 
 [tool.scikit-build]
 sdist.include = ["src/viewshed/*.pyi", "src/viewshed/py.typed"]
+# force Ninja even when the environment sets CMAKE_GENERATOR (e.g. conda vs2022
+# activation exports a Visual Studio generator that may not be installed)
+cmake.args = ["-GNinja"]
 
 [project]
 name = "viewshed"
